@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-ln-provider="chatgpt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern panel preview</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f7f7f8; color: #202123; font: 16px/1.55 Georgia, serif; }
+  header { height: 56px; padding: 14px 24px; background: #fff; border-bottom: 1px solid #e3e3e6; font: 600 16px/1 system-ui, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 36px 24px 140px; }
+  [data-message-author-role] { margin: 0 0 24px; padding: 18px 20px; border-radius: 8px; background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .05); }
+  [data-message-author-role="user"] { margin-left: 14%; background: #e8f4ef; }
+  form { position: fixed; right: 0; bottom: 0; left: 0; padding: 16px max(24px, calc((100vw - 820px) / 2)); background: rgba(255, 255, 255, .96); border-top: 1px solid #e3e3e6; }
+  #prompt-textarea { min-height: 60px; padding: 14px; border: 1px solid #b9b9be; border-radius: 8px; background: #fff; font-family: system-ui, sans-serif; outline: none; }
+  #prompt-textarea:focus { border-color: #0f7a5a; }
+</style>
+</head>
+<body>
+  <header>Test chat</header>
+  <main>
+    <article data-message-author-role="user">Write a short update for a client about a delayed project.</article>
+    <article data-message-author-role="assistant" class="markdown">
+      <p>The delivery date has moved by three days because the final review found two issues worth fixing first.</p>
+      <p>I can draft the client update in a clear, calm tone.</p>
+    </article>
+  </main>
+  <form data-testid="chat-input"><div id="prompt-textarea" class="ProseMirror" contenteditable="true" role="textbox" aria-label="Message"></div></form>
+
+  <script>
+    (() => {
+      const query = new URLSearchParams(location.search);
+      const provider = query.get('provider');
+      if (provider === 'chatgpt' || provider === 'claude' || provider === 'gemini') {
+        document.documentElement.dataset.lnProvider = provider;
+      }
+      const attachShadow = Element.prototype.attachShadow;
+      Element.prototype.attachShadow = function (options) {
+        const shadow = attachShadow.call(this, options);
+        if (this.id === 'lantern-root') window.__lnPreviewRoot = shadow;
+        return shadow;
+      };
+      const data = query.get('handover') === 'auto' ? {
+        lnCarry: {
+          text: 'Continue the client update from this handover.',
+          ts: Date.now(),
+          lang: 'en',
+          autoInsert: true
+        }
+      } : {};
+      const listeners = [];
+      window.__lnHostPanelEvents = [];
+      ['keydown', 'beforeinput', 'input', 'compositionend', 'paste', 'focusin'].forEach(type => {
+        document.addEventListener(type, event => {
+          if (event.target && event.target.id === 'lantern-root') {
+            window.__lnHostPanelEvents.push(type);
+          }
+        });
+      });
+      const local = {
+        get(keys, callback) {
+          const result = {};
+          (Array.isArray(keys) ? keys : [keys]).forEach(key => {
+            if (Object.prototype.hasOwnProperty.call(data, key)) result[key] = data[key];
+          });
+          callback(result);
+        },
+        set(values, callback) {
+          const changes = {};
+          Object.keys(values || {}).forEach(key => {
+            changes[key] = { oldValue: data[key], newValue: values[key] };
+            data[key] = values[key];
+          });
+          if (callback) callback();
+          if (Object.keys(changes).length) listeners.forEach(listener => listener(changes, 'local'));
+        },
+        remove(keys, callback) {
+          const changes = {};
+          (Array.isArray(keys) ? keys : [keys]).forEach(key => {
+            if (!Object.prototype.hasOwnProperty.call(data, key)) return;
+            changes[key] = { oldValue: data[key], newValue: undefined };
+            delete data[key];
+          });
+          if (callback) callback();
+          if (Object.keys(changes).length) listeners.forEach(listener => listener(changes, 'local'));
+        }
+      };
+      window.chrome = {
+        runtime: {
+          id: 'lantern-preview',
+          lastError: null,
+          getURL(path) { return new URL('../' + path, location.href).href; },
+          onMessage: { addListener() {} },
+          sendMessage(_message, callback) { if (callback) callback({ ok: false }); }
+        },
+        storage: {
+          local,
+          onChanged: { addListener(listener) { listeners.push(listener); } }
+        }
+      };
+    })();
+  </script>
+  <script src="../src/store.js"></script>
+  <script src="../src/providers.js"></script>
+  <script src="../src/rules.js"></script>
+  <script src="../src/i18n.js"></script>
+  <script src="../src/engine.js"></script>
+  <script src="../src/inpage.js"></script>
+  <script src="../src/content.js"></script>
+</body>
+</html>

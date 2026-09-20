@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lantern einrichten — Schritt für Schritt</title>
+<style>
+  :root{--fg:#1b1d1c;--soft:#5c625f;--line:#dcdfdd;--bg:#fbfaf7;--accent:#0f7a5a;--warn:#8a5a00}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:17px/1.65 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  h1{font-size:32px;line-height:1.2;margin:0 0 6px}
+  .sub{color:var(--soft);font-size:18px;margin:0 0 8px}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);
+        border-radius:99px;padding:5px 14px;font-size:14px;color:var(--soft);margin-bottom:26px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:14px;
+        padding:20px 22px 22px;margin:0 0 18px;display:flex;gap:18px;align-items:flex-start}
+  .n{flex:0 0 44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;
+     display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700}
+  .body{flex:1;min-width:0}
+  .body h2{margin:6px 0 8px;font-size:21px;line-height:1.3}
+  .body p{margin:0 0 10px}
+  .body p:last-child{margin-bottom:0}
+  code{background:#eef1ef;border:1px solid var(--line);border-radius:6px;
+       padding:2px 7px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px;
+       word-break:break-all}
+  .type{display:block;background:#111;color:#8ef0c4;border-radius:8px;padding:12px 14px;
+        font-family:ui-monospace,Menlo,Consolas,monospace;font-size:17px;margin:10px 0;
+        word-break:break-all}
+  .note{background:#fff8e8;border:1px solid #e8d9ae;border-left:4px solid var(--warn);
+        border-radius:8px;padding:12px 14px;margin:12px 0;font-size:15.5px}
+  .ok{background:#eaf7f1;border:1px solid #bfe3d3;border-left:4px solid var(--accent)}
+  figure{margin:12px 0 4px}
+  figcaption{font-size:14px;color:var(--soft);margin-top:6px}
+  svg{max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+  h3{margin:34px 0 10px;font-size:22px}
+  details{background:#fff;border:1px solid var(--line);border-radius:10px;
+          padding:12px 16px;margin:0 0 10px}
+  summary{cursor:pointer;font-weight:600}
+  details p{margin:10px 0 2px}
+  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);
+         color:var(--soft);font-size:14.5px}
+  b.k{background:#eef1ef;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:15px}
+  @media print{body{background:#fff}.step{break-inside:avoid}}
+</style></head><body><div class="wrap">
+
+<h1>Lantern einrichten</h1>
+<p class="sub">Sieben Schritte. Du brauchst keine Vorkenntnisse.</p>
+<p class="time">Dauer: etwa zwei Minuten &nbsp;·&nbsp; für Google Chrome und Microsoft Edge</p>
+
+<div class="note ok"><b>Updates später einfach bekommen:</b> Wenn du möchtest,
+   doppelklicke zuerst auf <code>INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd</code>.
+   Die Datei legt Lantern sicher in deinen Dokumenten ab und macht spätere
+   Updates zu einem Doppelklick. Du brauchst dafür kein GitHub-Konto und kein
+   Passwort. Auf verwalteten Arbeitsgeräten kann die IT die Git-Installation
+   sperren; dann bleib beim ZIP-Weg oder frage die IT. Wenn du lieber bei
+   ZIP-Dateien bleibst, überspringe diesen Hinweis und folge den sieben
+   Schritten unten.</div>
+
+<div class="step"><div class="n">1</div><div class="body">
+  <h2>Den Ordner an einen festen Platz legen</h2>
+  <p>In diesem Ordner liegt ein Unterordner mit dem Namen <code>lantern</code>.
+     Verschiebe den ganzen Ordner dorthin, wo er dauerhaft bleiben kann. Zum Beispiel
+     in <b>Dokumente</b>.</p>
+  <div class="note"><b>Wichtig:</b> Lass ihn nicht im Download-Ordner liegen.
+     Chrome lädt Lantern bei jedem Start aus diesem Ordner. Wird er später
+     verschoben, umbenannt oder gelöscht, funktioniert Lantern nicht mehr.</div>
+</div></div>
+
+<div class="step"><div class="n">2</div><div class="body">
+  <h2>Chrome öffnen und diese Adresse eintippen</h2>
+  <p>Klick oben in die Adresszeile — dort, wo sonst <i>google.de</i> steht.
+     Tippe genau das hier und drücke Enter:</p>
+  <span class="type">chrome://extensions</span>
+  <p>Bei <b>Microsoft Edge</b> heißt die Adresse <code>edge://extensions</code>.
+     Alles Weitere ist gleich.</p>
+  <div class="note">Das ist keine Internetseite, sondern eine Einstellungsseite
+     von Chrome selbst. Google findet sie nicht — du musst sie eintippen.</div>
+</div></div>
+
+<div class="step"><div class="n">3</div><div class="body">
+  <h2>Oben rechts den Schalter „Entwicklermodus“ einschalten</h2>
+  <p>Er sitzt in der rechten oberen Ecke der Seite. Schalte ihn ein.
+     Danach erscheinen oben links drei neue Schaltflächen.</p>
+  <figure>
+    <svg viewBox="0 0 700 150" role="img" aria-label="Skizze der Seite chrome://extensions mit dem Schalter Entwicklermodus oben rechts">
+      <rect x="0" y="0" width="700" height="150" fill="#fff"/>
+      <rect x="0" y="0" width="700" height="44" fill="#f3f4f3"/>
+      <text x="18" y="29" font-size="16" fill="#1b1d1c" font-family="sans-serif">Erweiterungen</text>
+      <rect x="533" y="14" width="34" height="18" rx="9" fill="#0f7a5a"/>
+      <circle cx="558" cy="23" r="7" fill="#fff"/>
+      <text x="575" y="28" font-size="13" fill="#1b1d1c" font-family="sans-serif">Entwicklermodus</text>
+      <path d="M556 46 L556 66" stroke="#c2410c" stroke-width="2.5"/>
+      <path d="M556 70 l-5 -8 l10 0 z" fill="#c2410c"/>
+      <text x="470" y="86" font-size="13" fill="#c2410c" font-family="sans-serif">hier einschalten</text>
+      <rect x="18" y="62" width="168" height="30" rx="6" fill="#fff" stroke="#c2410c" stroke-width="2"/>
+      <text x="30" y="82" font-size="13" fill="#1b1d1c" font-family="sans-serif">Entpackte Erweiterung laden</text>
+      <rect x="196" y="62" width="86" height="30" rx="6" fill="#fff" stroke="#dcdfdd"/>
+      <text x="210" y="82" font-size="13" fill="#5c625f" font-family="sans-serif">Packen</text>
+      <rect x="292" y="62" width="112" height="30" rx="6" fill="#fff" stroke="#dcdfdd"/>
+      <text x="304" y="82" font-size="13" fill="#5c625f" font-family="sans-serif">Aktualisieren</text>
+      <text x="18" y="126" font-size="13" fill="#9aa19d" font-family="sans-serif">(So ungefähr sieht die Seite aus. Die Wörter können leicht abweichen.)</text>
+    </svg>
+  </figure>
+  <div class="note">Der Entwicklermodus muss <b>eingeschaltet bleiben</b>.
+     Schaltest du ihn später aus, ist Lantern weg.</div>
+</div></div>
+
+<div class="step"><div class="n">4</div><div class="body">
+  <h2>Auf „Entpackte Erweiterung laden“ klicken</h2>
+  <p>Das ist die linke der drei neuen Schaltflächen, oben links auf der Seite.
+     Auf Englisch heißt sie <i>Load unpacked</i>.</p>
+  <p>Es öffnet sich ein Fenster zum Auswählen eines Ordners.</p>
+</div></div>
+
+<div class="step"><div class="n">5</div><div class="body">
+  <h2>Den Ordner <code>lantern</code> auswählen</h2>
+  <p>Klick dich zu dem Platz, an den du den Ordner in Schritt 1 gelegt hast,
+     und wähle den Ordner mit dem Namen <b>lantern</b> aus.</p>
+  <div class="note"><b>Nicht hineingehen.</b> Du musst den Ordner <i>lantern</i>
+     nur einmal anklicken und dann unten auf „Ordner auswählen“ drücken.
+     Nicht einen der Unterordner darin (src, popup, icons) auswählen.</div>
+  <p>Lantern erscheint jetzt in der Liste. Die Installation ist damit fertig.</p>
+</div></div>
+
+<div class="step"><div class="n">6</div><div class="body">
+  <h2>Eine der drei Seiten öffnen und neu laden</h2>
+  <span class="type">chatgpt.com &nbsp; · &nbsp; claude.ai &nbsp; · &nbsp; gemini.google.com</span>
+  <p>Wenn die Seite schon offen war, lade sie einmal neu: Taste <b class="k">F5</b>.
+     Erweiterungen greifen erst nach einem Neuladen.</p>
+  <p>Am <b>rechten Bildschirmrand</b> sitzt jetzt ein schmaler Reiter mit der
+     Aufschrift „Lantern“. Fährst du mit der Maus darüber, kommt er ein Stück
+     heraus. Ein Klick klappt das Fenster auf.</p>
+  <figure>
+    <svg viewBox="0 0 700 190" role="img" aria-label="Skizze: der schmale Lantern-Reiter am rechten Bildschirmrand">
+      <rect x="0" y="0" width="700" height="190" fill="#fff"/>
+      <rect x="0" y="0" width="700" height="190" fill="#fbfaf7"/>
+      <rect x="40" y="140" width="600" height="34" rx="17" fill="#fff" stroke="#dcdfdd"/>
+      <text x="60" y="162" font-size="14" fill="#9aa19d" font-family="sans-serif">Schreib hier deine Nachricht …</text>
+      <rect x="676" y="52" width="24" height="72" rx="6" fill="#0f7a5a"/>
+      <text x="694" y="112" font-size="12" fill="#fff" font-family="sans-serif" transform="rotate(-90 694 112)">Lantern</text>
+      <path d="M640 88 L668 88" stroke="#c2410c" stroke-width="2.5"/>
+      <path d="M672 88 l-8 -5 l0 10 z" fill="#c2410c"/>
+      <text x="470" y="80" font-size="13" fill="#c2410c" font-family="sans-serif">hier klicken</text>
+    </svg>
+  </figure>
+  <p>Es geht auch mit der Tastatur: <b class="k">Strg</b> + <b class="k">Umschalt</b> + <b class="k">K</b>.</p>
+</div></div>
+
+<div class="step"><div class="n">7</div><div class="body">
+  <h2>Ausprobieren</h2>
+  <p>Schreib in das große Feld einfach, was du willst. Ganz normal, klein
+     geschrieben und unvollständig ist völlig in Ordnung. Zum Beispiel:</p>
+  <span class="type">ich brauche eine email an meinen vermieter wegen der heizung</span>
+  <p>Dann auf <b>„Prompt bauen“</b> klicken. Lantern macht daraus eine fertige
+     Nachricht, und <b>„In den Chat einfügen“</b> setzt sie direkt in das
+     Eingabefeld.</p>
+  <p>Für eine ganz andere Anfrage klickst du auf <b>„Alles leeren“</b>. Das leert
+     das große Feld, alle Details und Häkchen sowie die aktuelle Prompt-Vorschau.
+     Deine Sprache, Farbe und Schriftgröße bleiben dabei erhalten.</p>
+  <div class="note ok"><b>Abschicken tust immer du.</b> Lantern schreibt nur in
+     das Eingabefeld und hört dann auf. Es drückt nie selbst auf Senden.</div>
+</div></div>
+
+<h3>Einstellungen, wenn du sie brauchst</h3>
+
+<p>Öffne im Lantern-Fenster den Reiter <b>„Einstellungen“</b>. Dort kannst du
+   Schriftgröße, Farbe und die Anzeige im Chat ändern. Dieselben Einstellungen
+   findest du auch über das Lantern-Symbol oben rechts in Chrome.</p>
+
+<p>Du weißt nicht, welcher Reiter wofür da ist? In <b>„Einstellungen“</b> kannst
+   du jederzeit <b>„Kurze Erklärung noch einmal zeigen“</b> anklicken. Die
+   Erklärung nennt alle fünf Reiter in einem Satz.</p>
+
+<details open><summary>Die Schrift ist mir zu klein</summary>
+  <p>Unter <b>„Schriftgröße“</b> stehen fünf Stufen: Klein, Normal, Groß,
+     Sehr groß und Riesig. <b>Normal</b> ist die Voreinstellung; jeder Knopf
+     zeigt dir direkt, wie groß die Schrift danach wird.</p>
+  <p>Das gilt nur für Lanterns eigenes Fenster. Die Seite darunter bleibt genau
+     so, wie sie ist. Die Änderung ist sofort da, auch in Tabs, die schon
+     offen sind.</p></details>
+
+<details><summary>Ich möchte eine andere Farbe</summary>
+  <p>Unter <b>„Farbe“</b> stehen fünf Punkte zum Anklicken: Grün, Blau, Violett,
+     Beere und Grau. Alle fünf sind hell und dunkel auf Lesbarkeit geprüft.</p>
+  <p>Grau ist für alle, die gar keine Farbe auf ihrem Bildschirm haben
+     wollen.</p></details>
+
+<details><summary>Der Chat soll nicht zur Seite rücken</summary>
+  <p>Schalte <b>„Im Chat anzeigen“</b> aus. Dann bleibt Lantern im Vordergrund,
+     markiert aber weder das Eingabefeld noch die letzte Antwort im Chat.</p></details>
+
+<h3>Wenn etwas nicht klappt</h3>
+
+<details><summary>Der Reiter erscheint nicht auf der Seite</summary>
+  <p>Lade die Seite einmal neu (<b class="k">F5</b>). Erweiterungen greifen erst
+     nach einem Neuladen. Hilft das nicht: Klick oben rechts in Chrome auf das
+     Lantern-Symbol und dort auf „Selbsttest auf dieser Seite“.</p></details>
+
+<details><summary>„Manifest-Datei fehlt oder ist nicht lesbar“</summary>
+  <p>Du hast den falschen Ordner ausgewählt. Es muss der Ordner mit dem Namen
+     <b>lantern</b> sein — nicht der Ordner darüber und keiner der Unterordner
+     darin.</p></details>
+
+<details><summary>Chrome warnt vor Erweiterungen im Entwicklermodus</summary>
+  <p>Diese Meldung erscheint bei jeder selbst geladenen Erweiterung. Sie ist
+     normal und kein Zeichen für ein Problem. Du kannst sie wegklicken.</p></details>
+
+<details><summary>Lantern ist plötzlich weg oder ausgegraut</summary>
+  <p>Entweder wurde der Ordner verschoben, umbenannt oder gelöscht — dann leg ihn
+     zurück. Oder der Entwicklermodus wurde ausgeschaltet — dann schalte ihn
+     wieder ein (Schritt 3).</p></details>
+
+<details><summary>Der Entwicklermodus-Schalter fehlt (Arbeitsrechner)</summary>
+  <p>Auf einem vom Arbeitgeber verwalteten Chrome ist das Laden eigener
+     Erweiterungen oft per Richtlinie gesperrt. Dann fehlt der Schalter, oder
+     Lantern verschwindet nach dem Laden wieder. Das ist keine Fehlfunktion und
+     lässt sich von außen nicht umgehen. Da hilft nur die IT-Abteilung oder ein
+     privater Browser.</p></details>
+
+<details><summary>Eine neue Version einspielen</summary>
+  <p>Wenn im Lantern-Menü ein <b>!</b> erscheint, gibt es eine neue offizielle
+     Version. Klicke dort auf „Aktualisieren“ – die Seite erklärt dir genau,
+     warum sie erscheint und was als Nächstes zu tun ist.</p>
+  <p>Hast du die Updates einmal eingerichtet? Öffne deinen Lantern-Ordner in
+     <b>Dokumente</b> und doppelklicke auf <code>AKTUALISIEREN.cmd</code>.
+     Danach öffnet sich Chrome: Bei Lantern auf den Kreis-Pfeil „Neu laden"
+     klicken und offene Chat-Seiten einmal mit <b class="k">F5</b> laden.</p>
+  <p>Die Datei lädt nur neue Dateien aus dem offiziellen Lantern-Projekt. Sie
+     überschreibt keine eigenen Änderungen und schickt keine Chats oder
+     Zugangsdaten irgendwohin.</p></details>
+
+<details><summary>Ich möchte weiterhin nur ZIP-Dateien benutzen</summary>
+  <p>Im Lantern-Menü auf „Release ansehen“ klicken, die neue ZIP-Datei
+     herunterladen und entpacken. Ersetze den alten Ordner <b>lantern</b> durch
+     den neuen. Dann auf <code>chrome://extensions</code> bei Lantern auf den
+     Kreis-Pfeil „Neu laden“ klicken und offene Chat-Seiten einmal neu laden.</p></details>
+
+<details><summary>Darf ich das auf dem Arbeitsrechner benutzen?</summary>
+  <p>Von Lanterns Seite aus: ja, uneingeschränkt und dauerhaft kostenlos.
+     Es steht unter der MIT-Lizenz (Datei <code>LICENSE</code> im Ordner
+   lantern). Lantern speichert Chats, Texte und Einstellungen nur in deinem
+   Browser. Optional prüft es einmal täglich ausschließlich die öffentliche
+   Versionsnummer im offiziellen GitHub-Projekt; dabei gehen keine Chats,
+   Texte, Konten oder Kennungen nach außen. GitHub sieht nur normale
+   Verbindungsdaten wie bei jedem Webseitenaufruf, zum Beispiel deine
+   IP-Adresse.</p>
+  <p>Was Lantern nicht beantwortet: ob dein Arbeitgeber KI-Dienste überhaupt
+     erlaubt und was du dort eingeben darfst. Das ist eine Frage an deinen
+     Arbeitgeber.</p></details>
+
+<footer>
+  <p>Ausführlicher steht alles in <code>INSTALL.txt</code> im Ordner
+     <b>lantern</b>. Firefox wird zurzeit nicht unterstützt.</p>
+  <p>Lantern ist ein unabhängiges Werkzeug. Es gehört nicht zu OpenAI,
+     Anthropic oder Google und wird von ihnen weder betrieben noch empfohlen.
+     ChatGPT, Claude und Gemini sind Marken dieser Unternehmen und werden hier
+     nur genannt, um zu sagen, womit Lantern zusammenarbeitet.</p>
+</footer>
+
+</div></body></html>

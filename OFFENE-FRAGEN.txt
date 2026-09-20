@@ -1,0 +1,79 @@
+===============================================================================
+  LANTERN  -  OFFENE FRAGEN
+===============================================================================
+
+Fragen an euch. Antwort formlos zurueck, ein Satz pro Frage reicht.
+Wo unten "Selbsttest" steht, ist gemeint: Lantern oeffnen ->
+"Wie das funktioniert" -> "Laeuft Lantern hier richtig?".
+
+
+1.  Liest Lantern die letzte Antwort?
+    Selbsttest, Zeilen "Letzte Antwort gelesen" und "Woerter".
+    Auf chatgpt.com, claude.ai und gemini.google.com je einmal,
+    in einem Chat mit mindestens einer Antwort.
+
+2.  Stimmt das erkannte Modell?
+    Selbsttest, Zeile "Modell erkannt:", vergleichen mit dem,
+    was oben auf der Seite steht. Auch nach einem Modellwechsel.
+    Bezahlte Konten besonders.
+
+3.  Steht bei Gemini eine Aufwandsstufe?
+    Selbsttest, Zeile "Aufwandsstufe:".
+
+4.  Was steht auf der Seite, wenn euer Kontingent aufgebraucht ist?
+    Den Satz abschreiben oder abfotografieren, mit Angabe der Seite.
+
+5.  Aendern sich die Prompts, wenn ihr das Modell wechselt?
+    Denselben Text zweimal bauen, einmal je Modell, und die
+    zwei Ergebnisse nebeneinander legen.
+
+6.  Kommt der Hinweis "Dieser Chat wird lang" zum richtigen Zeitpunkt?
+    Zu frueh, zu spaet oder gar nicht.
+
+7.  Macht die Seite Platz, wenn das Lantern-Fenster rechts am Rand steht,
+    und ist sie wieder normal breit, sobald ihr es nach links zieht?
+    Auf allen drei Seiten.
+
+8.  Erscheint jemals eine Meldung ueber eine Stoerung des Anbieters?
+    Nur wenn ihr im Lantern-Menue "Stoerungen des Anbieters anzeigen"
+    eingeschaltet habt.
+
+9.  Bringt euch der Tennis-Schalter im Erklaerteil etwas?
+    "Wie das funktioniert" -> "Erklaer es mir mit Tennis".
+    Welche Karte war gut, welche ueberfluessig.
+
+10. Reicht die groesste Schriftgroesse?
+    Lantern-Menue in der Browserleiste -> "Schriftgroesse im
+    Lantern-Fenster" -> "Sehr gross".
+
+11. Ist die Antwort auf den Lantern-Prompt besser als die auf deine
+    eigene Frage?
+    Zwei NEUE Chats, gleiche KI, gleiches Modell. In den einen deine
+    Frage so, wie du sie geschrieben haettest. In den anderen das, was
+    Lantern daraus macht. Je eine Nachricht, nicht weiterschreiben.
+    Beide Antworten bewerten:
+      - Hat sie gemacht, worum ich gebeten habe?      1 bis 5
+      - Koennte ich sie ohne Aenderung benutzen?      1 bis 5
+      - Hat sie etwas erfunden, was ich nie gesagt habe?  ja / nein
+    Dann: A, B oder kein Unterschied.
+    Zehnmal, mit echten Anfragen verschiedener Art.
+    "Kein Unterschied" bitte als solches melden.
+
+12. Laesst Lantern deine Anfrage oefter unveraendert, als dir lieb ist?
+    Seit 1.9 haelt Lantern sich bei klaren Anfragen ganz heraus und sagt
+    das vorher an. Notier die Faelle, in denen du dir Hilfe gewuenscht
+    haettest und keine bekommen hast. Genau diese Grenze suchen wir.
+    Mit "Trotzdem ausbauen" bekommst du die lange Fassung.
+
+13. Findet Lantern die Knoepfe deiner KI?
+    Unter dem Eingabefeld von Lantern auf "Im Netz suchen", dann auf
+    "Bearbeitbares Dokument", dann auf "Gruendlich recherchieren".
+    Wird jedes Mal der richtige Knopf auf der Seite markiert, der
+    falsche, oder gar keiner? Auf allen drei Seiten.
+
+14. Stimmt, was Lantern ueber diese Knoepfe sagt?
+    Der Text unter der Knopfreihe sagt, wo der Knopf sitzt. Vergleich
+    das mit dem, was du tatsaechlich siehst. Was nicht stimmt, bitte
+    abschreiben.
+
+===============================================================================

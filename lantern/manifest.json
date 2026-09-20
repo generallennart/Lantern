@@ -1,0 +1,70 @@
+{
+  "manifest_version": 3,
+  "name": "Lantern — better prompts, plainly explained",
+  "version": "1.0.0",
+  "description": "Say what you want in plain words. Lantern turns it into a well-structured prompt and shows what is still missing.",
+  "minimum_chrome_version": "105",
+  "permissions": [
+    "alarms",
+    "storage",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://api.github.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "src/store.js",
+        "src/providers.js",
+        "src/rules.js",
+        "src/i18n.js",
+        "src/engine.js",
+        "src/inpage.js",
+        "src/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/panel.css",
+        "src/explainer.json"
+      ],
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "Lantern",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

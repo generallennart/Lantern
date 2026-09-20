@@ -1,0 +1,11 @@
+# Generated release output
+lantern/dist/
+*.zip
+
+# Local dependencies and test output
+lantern/node_modules/
+lantern/test-results.txt
+
+# Operating system files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,453 @@
+===============================================================================
+  LANTERN  -  Prompt-Helfer fuer ChatGPT, Claude und Gemini
+    Version 1.0.0
+===============================================================================
+
+Lantern ist eine Erweiterung fuer Chrome. Sie erscheint auf chatgpt.com,
+claude.ai und gemini.google.com und macht aus dem, was du willst, einen guten
+Prompt - passend zu dem Assistenten, in dem du gerade sitzt.
+
+Kostenlos, auch fuer die Arbeit. Es verschickt nie von allein eine Nachricht -
+abschicken tust immer du. Optional prueft Lantern einmal taeglich nur die
+oeffentliche Versionsnummer im offiziellen GitHub-Projekt; keine Chats, Texte,
+Konten oder Kennungen werden dabei uebertragen.
+
+Die Installation dauert etwa eine Minute. Du brauchst keine Vorkenntnisse.
+
+
+-------------------------------------------------------------------------------
+  SCHRITT 1  -  Ordner an einen festen Platz legen
+-------------------------------------------------------------------------------
+
+Entpacke die ZIP-Datei, falls noch nicht geschehen. Du hast dann einen Ordner
+mit dem Namen "lantern".
+
+WICHTIG: Lege diesen Ordner an einen Platz, an dem er dauerhaft bleiben kann,
+zum Beispiel:
+
+    Windows:  C:\Users\DEIN-NAME\Documents\lantern
+    Mac:      /Users/DEIN-NAME/Documents/lantern
+
+Chrome laedt die Erweiterung bei jedem Start aus diesem Ordner. Wenn du ihn
+spaeter verschiebst, loeschst oder umbenennst, funktioniert Lantern nicht mehr.
+Lass ihn also NICHT im Download-Ordner liegen.
+
+
+-------------------------------------------------------------------------------
+  SCHRITT 2  -  Erweiterungsseite in Chrome oeffnen
+-------------------------------------------------------------------------------
+
+Oeffne Chrome. Tippe oben in die Adresszeile:
+
+    chrome://extensions
+
+und druecke Enter.
+
+(Bei Microsoft Edge heisst die Adresse   edge://extensions   - alles andere
+ist gleich.)
+
+
+-------------------------------------------------------------------------------
+  SCHRITT 3  -  Entwicklermodus einschalten
+-------------------------------------------------------------------------------
+
+Oben rechts auf der Seite ist ein Schalter mit der Beschriftung
+"Entwicklermodus" (englisch: "Developer mode").
+
+Schalte ihn EIN. Es erscheinen daraufhin drei neue Schaltflaechen oben links.
+
+Das ist normal und noetig, weil Lantern nicht aus dem Chrome Web Store kommt,
+sondern von deiner Festplatte geladen wird.
+
+
+-------------------------------------------------------------------------------
+  SCHRITT 4  -  Ordner laden
+-------------------------------------------------------------------------------
+
+Klicke oben links auf:
+
+    "Entpackte Erweiterung laden"     (englisch: "Load unpacked")
+
+Es oeffnet sich ein Datei-Auswahlfenster.
+
+Waehle den Ordner "lantern" aus - also genau den Ordner, in dem die Datei
+manifest.json direkt drin liegt. NICHT den uebergeordneten Ordner und NICHT
+einen der Unterordner (src, popup, icons).
+
+Bestaetige mit "Ordner auswaehlen".
+
+Lantern erscheint jetzt in der Liste. Fertig.
+
+
+-------------------------------------------------------------------------------
+  SCHRITT 5  -  Ausprobieren
+-------------------------------------------------------------------------------
+
+Oeffne einen der drei Dienste:
+
+    https://chatgpt.com          https://claude.ai          https://gemini.google.com
+
+Am rechten Bildschirmrand sitzt jetzt ein schmaler Reiter mit der Aufschrift
+"Lantern". Faehrst du mit der Maus darueber, kommt er ein Stueck heraus; ein
+Klick klappt das Fenster auf, ein zweiter klappt es wieder zu.
+(Alternativ: Tastenkombination  Strg + Umschalt + K )
+
+Beim ersten Mal siehst du eine kurze Erklaerung. Schreib dann einfach in das
+grosse Feld, was du willst - ganz normal, klein geschrieben und unvollstaendig
+ist voellig in Ordnung. Zum Beispiel:
+
+    ich brauche eine email an meinen vermieter wegen der heizung
+
+Klicke dann auf "Prompt bauen". Lantern macht daraus einen fertigen Prompt und
+"In den Chat einfuegen" setzt ihn direkt in das Eingabefeld des Assistenten.
+
+
+-------------------------------------------------------------------------------
+  DARFST DU DAS AUF DEM ARBEITSRECHNER BENUTZEN?
+-------------------------------------------------------------------------------
+
+Von Lanterns Seite aus: ja, uneingeschraenkt. Lantern ist kostenlos, auch fuer
+die Arbeit, auch dauerhaft. Es steht unter der MIT-Lizenz (Datei LICENSE im
+Ordner). Du darfst es benutzen, kopieren, weitergeben und veraendern. Der
+einzige Punkt: Wenn du es weitergibst, gib die Datei LICENSE mit.
+
+Haftung, kurz gefasst:
+    Lantern wird unentgeltlich ueberlassen. Deshalb haftet der Urheber nur bei
+    Vorsatz und grober Fahrlaessigkeit (Paragraf 521 BGB), und fuer Maengel nur
+    dann, wenn er sie arglistig verschwiegen hat (Paragrafen 523, 524 BGB).
+    Zwingende Haftung bleibt davon unberuehrt. Der genaue Wortlaut steht in der
+    Datei LICENSE, Abschnitt "Haftung und Gewaehrleistung"; im Zweifel gilt der
+    dort, nicht diese Kurzfassung.
+
+    Es wird keine bestimmte Beschaffenheit oder Eignung zugesagt. Lantern ist
+    ein Hilfsmittel beim Schreiben von Prompts, kein geprueftes Produkt und
+    keine fachliche, rechtliche oder medizinische Beratung. Was dabei
+    herauskommt, pruefst du selbst, so wie du jede KI-Antwort pruefen wuerdest.
+
+Lantern speichert Texte, Verlauf und Einstellungen nur in deinem Browser. Es
+gibt kein Lantern-Konto und keinen Zugangsschluessel. Optional prueft Lantern
+einmal taeglich nur die oeffentliche Versionsnummer im offiziellen GitHub-
+Projekt ueber https://api.github.com. Dabei gehen keine Chats, Texte, Konten
+oder Kennungen nach aussen. GitHub sieht nur die normalen technischen
+Verbindungsdaten wie bei jedem Webseitenaufruf, zum Beispiel deine IP-Adresse.
+Was du bei ChatGPT, Claude oder Gemini eintippst, geht natuerlich weiterhin an
+deren Betreiber, genau wie ohne Lantern.
+
+Was Lantern NICHT loest: Ob dein Arbeitgeber KI-Dienste ueberhaupt erlaubt und
+was du dort eingeben darfst, ist eine Frage an deinen Arbeitgeber, nicht an
+Lantern.
+
+Wichtig bei verwalteten Firmenrechnern:
+    Auf einem vom Arbeitgeber verwalteten Chrome ist das Laden eigener
+    Erweiterungen oft per Richtlinie gesperrt. Dann fehlt entweder der
+    Entwicklermodus-Schalter, oder Lantern verschwindet nach dem Laden wieder.
+    Das ist keine Fehlfunktion und laesst sich von aussen nicht umgehen - da
+    hilft nur die IT-Abteilung oder ein privater Browser.
+
+Lantern gehoert nicht zu OpenAI, Anthropic oder Google und wird von ihnen weder
+betrieben noch empfohlen. ChatGPT, Claude und Gemini sind Marken dieser
+Unternehmen und stehen hier nur, um zu sagen, womit Lantern zusammenarbeitet.
+
+
+-------------------------------------------------------------------------------
+  UPDATES
+-------------------------------------------------------------------------------
+
+Chrome kann eine lokal geladene Erweiterung aus Sicherheitsgruenden nicht
+selbst ersetzen. Im Chrome Web Store ginge das vollautomatisch; bis dahin ist
+dies der einfachste sichere Weg:
+
+Einmal einrichten:
+     1. Doppelklicke im Lantern-Ordner auf
+         INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd.
+     2. Falls Git fehlt, oeffnet sich nur die offizielle Git-Downloadseite.
+         Installiere Git mit den Voreinstellungen und starte die Datei noch einmal.
+     3. Die Datei legt Lantern in Dokumente ab. Du brauchst kein GitHub-Konto
+         und kein Passwort. Auf einem verwalteten Arbeitsrechner kann die IT die
+         Git-Installation sperren; dann bleib beim ZIP-Weg oder frage die IT.
+
+Spaeter aktualisieren:
+     1. Doppelklicke im Lantern-Ordner in Dokumente auf AKTUALISIEREN.cmd.
+     2. Chrome oeffnet chrome://extensions. Klicke bei Lantern auf den
+         Kreis-Pfeil "Neu laden".
+     3. Lade offene Seiten von ChatGPT, Claude oder Gemini einmal neu (F5).
+
+Die Update-Datei holt nur neue Dateien aus dem offiziellen oeffentlichen
+Lantern-Projekt. Sie verwendet einen sicheren Nur-vorwaerts-Updateweg und
+ueberschreibt keine eigenen Aenderungen. Technisch heisst das
+"git pull --ff-only": Es werden keine Konflikte zusammengefuehrt.
+
+Wenn du lieber bei ZIP-Dateien bleibst: Im Lantern-Menue bei einem ! auf
+"Release ansehen" klicken, die neue ZIP-Datei herunterladen und wie bisher
+den alten lantern-Ordner ersetzen. Danach Chrome und die Chat-Seiten neu laden.
+
+Dein gespeicherter Text, dein Verlauf und deine Einstellungen bleiben dabei
+erhalten. Falls in einem geoeffneten Tab ploetzlich nichts mehr gespeichert
+wird, sagt Lantern dir das selbst und bietet einen Knopf zum Neuladen an.
+
+
+-------------------------------------------------------------------------------
+  FIREFOX
+-------------------------------------------------------------------------------
+
+Dieses Paket ist fuer Google Chrome und Microsoft Edge gebaut. Eine separate,
+signierte Firefox-Fassung ist hier nicht enthalten. Bitte lade diesen Ordner
+nicht in Firefox; bei Bedarf wird dafuer ein eigenes Paket benoetigt.
+
+
+-------------------------------------------------------------------------------
+  WENN ETWAS NICHT KLAPPT
+-------------------------------------------------------------------------------
+
+Der Reiter erscheint nicht auf der Seite
+    -> Lade die Seite neu (F5). Erweiterungen greifen erst nach einem Neuladen.
+
+"Manifest-Datei fehlt oder ist nicht lesbar"
+    -> Du hast den falschen Ordner ausgewaehlt. Es muss der Ordner sein, in dem
+       manifest.json direkt liegt.
+
+Die Erweiterung ist ploetzlich weg oder ausgegraut
+    -> Der Ordner wurde verschoben, umbenannt oder geloescht. Lege ihn zurueck
+       oder installiere ihn nach dieser Anleitung neu.
+
+Chrome warnt vor Erweiterungen im Entwicklermodus
+    -> Diese Meldung erscheint bei jeder selbst geladenen Erweiterung. Du kannst
+       sie wegklicken.
+
+Nichts passiert beim Klick auf "In den Chat einfuegen"
+    -> Der Prompt liegt trotzdem in der Zwischenablage. Klicke in das
+       Eingabefeld des Assistenten und druecke Strg + V.
+
+Lantern verhaelt sich seltsam oder zeigt alte Sachen an
+    -> Klicke oben rechts in Chrome auf das Lantern-Symbol und dort ganz unten
+       auf "Alles zuruecksetzen". Das loescht nur, was Lantern gespeichert hat
+       (deinen Text, den Verlauf, die Einstellungen) - an ChatGPT, Claude oder
+       Gemini selbst aendert sich nichts.
+
+Laeuft Lantern hier ueberhaupt richtig?
+    -> Oeffne das Lantern-Fenster, klicke oben rechts auf "?" und dort ganz
+       unten auf "Laeuft Lantern hier richtig?". Es sagt dir Zeile fuer Zeile,
+       was es auf der Seite findet, und was auf dem Modell-Knopf steht. Die
+       Anzeige aktualisiert sich von selbst, solange sie offen ist; ein zweiter
+       Klick auf den Knopf macht sie wieder zu.
+
+       Ein leerer Chat ist dabei kein Fehler. Solange noch keine Nachricht da
+       ist, stehen "Nachrichten lesbar" und "Letzte Antwort gelesen" auf einem
+       grauen Punkt statt auf einem roten Kreuz - es gibt schlicht noch nichts
+       zu lesen. Sobald die erste Antwort da ist, fuellen sich die Zeilen.
+
+Das Fenster steht im Weg
+    -> Zieh es am oberen Rand an eine andere Stelle. Die Groesse aenderst du an
+       jeder der vier Ecken. Lantern merkt sich beides.
+
+Irgendetwas anderes klappt nicht
+    -> Klicke oben rechts in Chrome auf das Lantern-Symbol und dort auf
+       "Selbsttest auf dieser Seite". Lantern sagt dir dann Zeile fuer Zeile,
+       was es auf der Seite findet und was nicht. Wenn dort steht, dass
+       Lantern auf dieser Seite nicht laeuft, lade die Seite neu (F5).
+
+
+-------------------------------------------------------------------------------
+  WAS LANTERN SONST NOCH KANN
+-------------------------------------------------------------------------------
+
+Schrift zu klein? Farbe zu gruen?
+    Beides laesst sich einstellen. Klick oben rechts in Chrome auf das
+    Lantern-Symbol. Ganz oben stehen zwei Sachen:
+
+        Schriftgroesse    Vier Stufen von Normal bis Sehr gross. Gilt nur
+                          fuer Lanterns eigenes Fenster - die Seite darunter
+                          bleibt, wie sie ist. Die Aenderung ist sofort da,
+                          auch in Tabs, die schon offen sind.
+
+        Farbe             Fuenf Punkte zum Anklicken: Gruen, Blau, Violett,
+                          Beere und Grau. Alle fuenf sind hell und dunkel
+                          auf Lesbarkeit geprueft. Grau ist fuer alle, die
+                          gar keine Farbe auf dem Bildschirm wollen.
+
+Zeigt dir, was am Prompt angepasst wurde.
+    Unter den beiden Knoepfen steht nach dem Bauen eine kurze Liste: was
+    Lantern fuer genau diesen Assistenten und genau dieses Modell anders
+    gemacht hat. Zum Beispiel "dein Material nach oben, die Aufgabe darunter"
+    oder "keine Rollenangabe (starkes Denkmodell braucht keine)". Das kannst
+    du direkt am Prompt darunter nachpruefen.
+
+Erklaert dir, was da eigentlich passiert.
+    Klick im Lantern-Fenster oben rechts auf das Fragezeichen. Die erste Frage
+    dort ist "Was ist das hier ueberhaupt fuer ein Ding?" - und die Antwort
+    darauf ist die, aus der alles andere folgt. In den Antworten stecken
+    weitere Fragen, die du aufklappen kannst, und darin nochmal welche.
+    Geschrieben fuer jemanden, dem das noch nie jemand erklaert hat.
+
+    Daneben gibt es einen Schalter "Erklaer es mir mit Tennis". Der erzaehlt
+    dasselbe noch einmal, aber als durchgehendes Beispiel auf dem Tennisplatz.
+    Man muss dafuer nicht Tennis spielen - das Beispiel erklaert sich selbst.
+
+    Die kurze Uebersicht ueber alle Reiter findest du jederzeit wieder im
+    Reiter "Einstellungen" mit "Kurze Erklaerung noch einmal zeigen".
+
+Es liest deinen Satz mit.
+    Wenn du "in 3 saetzen eine sachliche mail an meinen vermieter" schreibst,
+    erkennt Lantern Laenge, Ton und Empfaenger von selbst und fragt nicht noch
+    einmal danach. Was es erkannt hat, zeigt es dir an.
+
+Der Reiter "Nachfassen".
+    Wenn eine Antwort da ist, zeigt Lantern passende fertige Nachfragen. Fuer
+    eine eigene Korrektur klickst du auf "Zum Chatfeld" und schreibst direkt
+    im echten Eingabefeld von ChatGPT, Claude oder Gemini. Lantern hat hier
+    kein zweites Textfeld und kopiert deinen Text nicht noch einmal weiter.
+
+Ganz neu anfangen.
+    Der Knopf "Alles leeren" neben "Prompt bauen" leert die aktuelle Anfrage,
+    alle Details und Haken. Deine Schriftgroesse, Farbe und Sprache bleiben.
+
+Wenn der Assistent dir Fragen stellt.
+    Lantern macht daraus ein Formular mit einem Feld pro Frage und baut aus
+    deinen Antworten eine saubere, nummerierte Nachricht. Was du nicht weisst,
+    laesst du leer.
+
+Nach dem Schaerfen.
+    Die Anfrage zum Schaerfen landet im aktuellen Chat, fertig zum eigenen
+    Abschicken. Lantern oeffnet kein neues Fenster und schickt nichts selbst.
+    Nach deiner Nachricht holt es den geschaerften Prompt aus dem Codeblock
+    der Antwort wieder ins Lantern-Fenster.
+
+
+Lantern im Chat.
+    Solange das Fenster offen ist, rueckt der Chat zur Seite statt verdeckt zu
+    werden, das Eingabefeld ist hervorgehoben, und unter der letzten Antwort
+    steht eine Leiste mit den Nachfragen, die zu genau dieser Antwort passen.
+    Abschalten kannst du das im Reiter "Einstellungen" mit "Im Chat anzeigen"
+    oder im Lantern-Menue (Symbol oben rechts in Chrome).
+
+Passt sich dem Modell an.
+    Lantern liest oben am Modell-Knopf ab, welches Modell eingestellt ist, und
+    zeigt dir den Namen an. Fuer Astra, Sol, Terra und Luna nutzt es zurzeit
+    neutrale Prompt-Vorgaben: Die Namen sind keine Rangliste nach Preis,
+    Geschwindigkeit oder Qualitaet. Hohe Aufwandsstufen bei den Anbietern
+    koennen weiterhin dein Kontingent schneller verbrauchen; darauf weist
+    Lantern hin.
+
+Tastenkuerzel.
+    Strg+Umschalt+K oeffnet und schliesst das Fenster. Strg+Enter im grossen
+    Feld baut den Prompt sofort, ohne Mausklick.
+
+Gedaechtnis-Warnung.
+    Wenn der Assistent sich auf Dinge bezieht, die du in diesem Chat nie gesagt
+    hast,
+    sagt Lantern dir das und zeigt die Stellen. Meist steckt das gespeicherte
+    Gedaechtnis dahinter - eine der haeufigsten Ursachen fuer Antworten, die
+    seltsam danebenliegen. Zwei Klicks fragen nach oder schalten es fuer diese
+    Aufgabe ab.
+
+Mehrere Nachrichten? Muss nicht sein.
+    Wenn du schreibst, dass gleich noch mehr kommt, bietet Lantern dir an, die
+    Teile zu sammeln. Du schreibst Teil fuer Teil, Lantern macht daraus EINE
+    Nachricht. Das ist deutlich besser, als Stuecke zu schicken, auf die schon
+    halb geantwortet wurde.
+
+Chat umziehen.
+    Wird ein Chat lang und wirr, faengst du nicht bei null an: Lantern laesst
+    den Assistenten eine Uebergabe schreiben, holt sie ab und startet damit
+    einen neuen Chat - mit der Anweisung, dass die Uebergabe Vorrang vor dem
+    Gedaechtnis hat und erst bestaetigt werden muss, was verstanden wurde.
+
+
+-------------------------------------------------------------------------------
+  AKTUALISIEREN  /  ENTFERNEN
+-------------------------------------------------------------------------------
+
+Aktualisieren:
+    Neue Dateien ueber den alten Ordner entpacken (ersetzen), dann auf
+    chrome://extensions bei Lantern auf das Kreis-Symbol "Neu laden" klicken.
+
+Entfernen:
+    Auf chrome://extensions bei Lantern auf "Entfernen" klicken.
+    Danach kannst du den Ordner loeschen.
+
+
+-------------------------------------------------------------------------------
+  WAS LANTERN MIT DEINEN DATEN MACHT
+-------------------------------------------------------------------------------
+
+Nichts verlaesst deinen Browser.
+
+Der Knopf "Prompt bauen" arbeitet vollstaendig auf deinem Rechner, ohne
+Internetverbindung und ohne Kosten.
+
+Der Knopf "Schaerfen" legt eine vorbereitete Nachricht in das Eingabefeld des
+Assistenten, in dem du gerade sitzt. Du kannst sie dort noch ansehen oder
+aendern und schickst sie selbst ab. Erst dann kostet sie eine Nachricht aus
+deinem eigenen Kontingent - kein Geld, kein API-Schluessel. Lantern oeffnet
+dabei keinen neuen Tab und drueckt nie auf Senden.
+
+Lantern hat Zugriff ausschliesslich auf die vier Adressen, die in der Datei
+manifest.json stehen: chatgpt.com, chat.openai.com, claude.ai und
+gemini.google.com. Auf jeder anderen Seite laeuft es gar nicht erst an. Es
+sendet nichts an Dritte, speichert nichts ausserhalb deines Browsers und liest
+keine Zugangsdaten - eine Berechtigung fuer Cookies verlangt es nicht einmal,
+kann sie also auch nicht lesen.
+
+
+===============================================================================
+  ENGLISH  -  SHORT VERSION
+===============================================================================
+
+1. Unzip and move the "lantern" folder somewhere permanent
+   (NOT your Downloads folder - Chrome loads it from disk on every start).
+
+2. In Chrome, open:   chrome://extensions
+   (Microsoft Edge:   edge://extensions )
+
+3. Turn ON "Developer mode" - the switch in the top right corner.
+
+4. Click "Load unpacked" (top left) and select the "lantern" folder -
+   the one that contains manifest.json directly.
+
+5. Open https://chatgpt.com , https://claude.ai or https://gemini.google.com
+   and reload the page. A narrow "Lantern" tab appears on the right-hand edge;
+   click it, or press Ctrl+Shift+K.
+
+Then just write what you want in plain words and press "Build prompt".
+
+Troubleshooting
+    Tab missing               -> reload the page (F5)
+    "Manifest file missing"   -> you picked the wrong folder; pick the one
+                                 containing manifest.json
+    Extension greyed out      -> the folder was moved, renamed or deleted
+    Insert does nothing       -> the prompt is on your clipboard anyway:
+                                 click the assistant's input box, press Ctrl+V
+    Lantern acting strangely   -> click the Lantern icon and press
+                                 "Reset everything" at the bottom; it clears
+                                 only what Lantern stored, not the assistant
+    Anything else               -> click the Lantern icon in the Chrome
+                                 toolbar and press "Self-test on this page";
+                                 it reports line by line what it can and
+                                 cannot see on the page
+
+For easy future updates, double-click INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd
+once. It clones only the public official Lantern repository into Documents;
+no GitHub account or password is needed. On a managed work device, IT may
+block Git installation; use the ZIP path or ask IT in that case. Later,
+double-click AKTUALISIEREN.cmd, click the Lantern reload icon on
+chrome://extensions, then reload open chat pages.
+
+Chrome can update extensions fully automatically only through the Chrome Web
+Store. A locally loaded extension is not allowed to replace itself.
+
+Privacy: prompt text, history, and settings stay in your browser. Optionally,
+once per day Lantern checks only the public release number in its official
+GitHub project. No chats, text, accounts, identifiers, or credentials are sent;
+GitHub sees normal technical connection data such as an IP address, as with any
+web request.
+"Build prompt" runs entirely offline. "Sharpen" puts a request in the current
+assistant chat and costs one message only when you choose to send it - no money,
+no API key. The extension can only run on chatgpt.com, chat.openai.com,
+claude.ai, gemini.google.com, and GitHub's public release API, and it never
+reads your credentials.
+
+Licence: MIT, free for any use including at work. Because it is given away for
+nothing, German law limits the author's liability to intent and gross
+negligence; the exact wording is in LICENSE.
+
+===============================================================================

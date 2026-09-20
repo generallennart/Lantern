@@ -1,0 +1,62 @@
+LANTERN VEROEFFENTLICHEN
+
+Diese Datei ist fuer die Person, die neue Lantern-Versionen veroeffentlicht.
+Sie braucht nur Git und Zugriff auf das GitHub-Konto generallennart.
+
+ERSTMALIG MIT GITHUB VERBINDEN
+
+Wenn "git push" "No anonymous write access" meldet:
+
+1. Installiere die aktuelle offizielle Version von Git fuer Windows von
+       https://git-scm.com/download/win.
+2. Lass bei der Installation "Git Credential Manager" eingeschaltet.
+3. Schliesse VS Code vollstaendig und oeffne es wieder.
+4. Oeffne im Ordner Lantern-1.0.0 ein Terminal und fuehre aus:
+               git push --set-upstream origin main --tags
+5. Der normale GitHub-Anmeldedialog oeffnet sich im Browser. Melde dich als
+       generallennart an und kehre danach zum Terminal zurueck.
+
+Nie ein Passwort oder einen Token in diese Datei, in das Projekt oder in einen
+Chat kopieren. Die Anmeldung passiert nur im normalen GitHub-Dialog.
+
+1. Im Ordner lantern die Versionsnummer aendern. Danach prueft der naechste
+   Schritt automatisch manifest.json, package.json, src\rules.js, INSTALL.txt,
+   README.md und den Review-Brief auf dieselbe Version.
+
+2. Im selben Ordner nacheinander ausfuehren:
+       npm run release:check
+       npm run verify
+       npm run audit:usefulness
+       npm run build
+
+3. Im Projektordner pruefen, was sich aendert:
+       git status
+
+4. Alles, was zur Version gehoert, speichern:
+       git add .
+       git commit -m "Release vX.Y.Z"
+
+5. Eine passende Version markieren und hochladen:
+       git tag vX.Y.Z
+       git push origin main --tags
+
+6. Auf GitHub unter Actions warten. Der Ablauf prueft die Erweiterung, baut die
+   ZIP-Datei und legt sie als GitHub Release ab. Erst wenn der Ablauf gruen ist,
+   sehen Nutzer die neue Version im Lantern-Menue.
+
+SICHERHEIT
+- Vor dem Hochladen immer Schritt 2 laufen lassen.
+- Nie Passwoerter, Tokens, Cookies oder Chat-Texte in Git speichern.
+- Wenn git push nach Zugang fragt, nur den normalen GitHub-Anmeldedialog nutzen.
+  Zugangsdaten nie in eine Datei im Projekt schreiben.
+- Tags immer mit v beginnen, zum Beispiel v1.0.1. Nur solche Releases akzeptiert
+  Lantern als Update.
+
+ENGLISH
+1. Update the version. The next command checks every visible version reference.
+2. Run npm run release:check, npm run verify, npm run audit:usefulness, and npm run build.
+3. Review git status.
+4. Run git add ., then git commit -m "Release vX.Y.Z".
+5. Run git tag vX.Y.Z and git push origin main --tags.
+6. Wait for the GitHub Action to publish the ZIP release. Lantern accepts only
+   v-prefixed numeric release tags.

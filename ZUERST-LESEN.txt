@@ -1,0 +1,35 @@
+===============================================================================
+  LANTERN  -  ZUERST HIER LESEN
+===============================================================================
+
+In diesem Ordner liegen fünf Dinge:
+
+    ANLEITUNG.html     <-- Doppelklick darauf. Das ist die Anleitung.
+  INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd
+             <-- Optional: einmal doppelklicken fuer einfache Updates.
+  AKTUALISIEREN.cmd  <-- Spaeter zum Aktualisieren doppelklicken.
+    OFFENE-FRAGEN.txt  <-- ein paar Fragen an dich. Spaeter, in Ruhe.
+    lantern            <-- der Ordner mit dem Programm. Nicht anfassen.
+
+Die Anleitung oeffnet sich in deinem Browser und fuehrt dich in sieben
+Schritten durch. Du brauchst keine Vorkenntnisse und es dauert etwa
+zwei Minuten.
+
+Falls sich ANLEITUNG.html nicht oeffnet: Rechtsklick darauf ->
+"Oeffnen mit" -> Google Chrome.
+
+Wenn du Updates spaeter moeglichst einfach haben willst: Doppelklick auf
+INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd. Die Datei erklaert jeden Schritt,
+braucht kein GitHub-Konto und fragt nie nach einem Passwort.
+
+Ganz kurz, falls du es eilig hast:
+
+    1. Diesen ganzen Ordner an einen festen Platz legen, z.B. Dokumente.
+       NICHT im Download-Ordner lassen.
+    2. In Chrome oben in die Adresszeile tippen:  chrome://extensions
+    3. Oben rechts "Entwicklermodus" einschalten.
+    4. Oben links "Entpackte Erweiterung laden" anklicken.
+    5. Den Ordner "lantern" auswaehlen. Fertig.
+    6. chatgpt.com oeffnen und die Seite einmal neu laden (F5).
+
+===============================================================================

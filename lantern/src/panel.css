@@ -1,0 +1,1035 @@
+/* Lantern — panel styles. Injected into a shadow root, so nothing here can
+   leak into ChatGPT's page and nothing on the page can restyle the panel. */
+
+.ln {
+  --bg: #ffffff;
+  --bg-soft: #f7f7f8;
+  --fg: #1a1a1a;
+  --fg-soft: #6b6b70;
+  --line: #8a8b91;
+  /* Every type size in this file is a multiple of this one, so a reader who
+     needs bigger text changes one number and the whole panel follows. Boxes
+     and padding deliberately do NOT scale: the panel has a fixed width and
+     growing the padding with the text would eat the line length it is there
+     to protect. */
+  --ln-fs: 16px;
+  --accent: #0f7a5a;
+  --accent-fg: #ffffff;
+  --accent-soft: #e8f4ef;
+  --warn: #8a5a00;
+  --warn-soft: #fdf3e0;
+  --radius: 12px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, .14), 0 2px 8px rgba(0, 0, 0, .08);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--ln-fs);
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+.ln[data-dark] {
+  --bg: #202123;
+  --bg-soft: #2a2b2e;
+  --fg: #ececef;
+  --fg-soft: #a0a0a8;
+  --line: #76777c;
+  --accent: #19a97b;
+  --accent-fg: #08130f;
+  --accent-soft: #17322a;
+  --warn: #e0b464;
+  --warn-soft: #33291a;
+  --shadow: 0 8px 32px rgba(0, 0, 0, .5), 0 2px 8px rgba(0, 0, 0, .3);
+}
+
+/* ---- accent colours -----------------------------------------------------
+   From the first person outside this project to use it: "i would like to be
+   able to change the colorscheme from green to other colors."
+
+   Four alternatives plus the default, and every one of them is a full pair —
+   light and dark — because a colour that reads well on white is usually
+   unreadable on #202123 and the other way round. Each also carries its own
+   `accent-fg` (text ON the accent) and `accent-soft` (the tint behind it).
+
+   All five were measured rather than eyeballed. Every pairing the panel can
+   produce clears WCAG AA in both themes; the tightest is the default green at
+   4.59, the most comfortable is slate at 6.23. The UI suite walks the whole
+   shadow root and fails on anything under 4.5, in both themes, and it is run
+   against every palette — so a sixth colour that looks nice and reads badly
+   cannot get in quietly.
+
+   `slate` is deliberately there: not everybody wants a coloured tool sitting
+   on top of their work. */
+.ln[data-accent="blue"] {
+  --accent: #1256a8; --accent-fg: #ffffff; --accent-soft: #e6eefa;
+}
+.ln[data-accent="blue"][data-dark] {
+  --accent: #5aa9f0; --accent-fg: #08131f; --accent-soft: #17283a;
+}
+.ln[data-accent="violet"] {
+  --accent: #6b3fa0; --accent-fg: #ffffff; --accent-soft: #f0e9f8;
+}
+.ln[data-accent="violet"][data-dark] {
+  --accent: #b48ae8; --accent-fg: #150c22; --accent-soft: #2c2340;
+}
+.ln[data-accent="rose"] {
+  --accent: #a6325e; --accent-fg: #ffffff; --accent-soft: #fae8ef;
+}
+.ln[data-accent="rose"][data-dark] {
+  --accent: #ef8fb4; --accent-fg: #1c0a13; --accent-soft: #3a2130;
+}
+.ln[data-accent="slate"] {
+  --accent: #3f5262; --accent-fg: #ffffff; --accent-soft: #e9eef2;
+}
+.ln[data-accent="slate"][data-dark] {
+  --accent: #9fb6c7; --accent-fg: #0d151b; --accent-soft: #26323c;
+}
+
+.ln *, .ln *::before, .ln *::after { box-sizing: border-box; }
+
+/* Author rules beat the UA stylesheet, so [hidden] needs restating or any
+   element given an explicit display would ignore it. */
+.ln [hidden], .ln-panel[hidden], .ln-fab[hidden] { display: none !important; }
+
+/* ---- launcher ---------------------------------------------------------- */
+/* ---- the handle ---------------------------------------------------------
+   A tab on the edge of the window, not a button floating over the page.
+   The first version was a pill at right:20px / bottom:116px, which put a
+   permanent object on top of whatever the user was reading — on a chat site
+   that is squarely over the composer and the last answer.
+
+   Three states, one element:
+
+     rest    18px of edge. Wide enough for the mark to be recognisable, narrow
+             enough to disappear into the window frame.
+     hover   slides out to 46px and shows the name, so it is obvious what it
+             is before anybody commits to clicking it.
+     open    leaves the edge and attaches to the panel's left side, like the
+             tab on a folder. The arrow turns to face the edge, because that
+             is where clicking it now sends everything back to.
+
+   Vertical wordmark rather than a horizontal pill: an edge tab that reads
+   downwards costs the page 18 pixels of width and nothing else. */
+.ln-fab {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2147483000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 18px;
+  height: 96px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  transition: width .16s cubic-bezier(.2, .7, .3, 1),
+              height .16s cubic-bezier(.2, .7, .3, 1),
+              background-color .16s ease, border-radius .16s ease;
+}
+
+/* The accent edge is the only always-visible colour: at 18px it is what makes
+   the tab read as a control rather than as a rendering artefact. */
+.ln-fab::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 10px; bottom: 10px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: .85;
+}
+
+.ln-fab:hover, .ln-fab:focus-visible { width: 46px; height: 128px; }
+.ln-fab:active { background: var(--bg-soft); }
+
+.ln-fab svg { width: 15px; height: 15px; flex: none; color: var(--accent); }
+
+/* The name only exists once there is room for it. `max-height` rather than
+   display, so it animates instead of appearing. */
+.ln-fab-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: calc(var(--ln-fs) * 0.7857);
+  letter-spacing: .06em;
+  color: var(--fg-soft);
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .16s ease, opacity .12s ease;
+}
+.ln-fab:hover .ln-fab-label,
+.ln-fab:focus-visible .ln-fab-label,
+.ln-fab[data-open="1"] .ln-fab-label { max-height: 74px; opacity: 1; }
+
+/* Attached to the panel: the tab is out on the page now, so it is the panel's
+   left edge that must look continuous, not the window's right edge. */
+.ln-fab[data-open="1"] {
+  width: 26px;
+  height: 108px;
+  border: 1px solid var(--line);
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  transform: none;
+  box-shadow: -3px 0 12px rgba(0, 0, 0, .12);
+}
+.ln-fab[data-open="1"]:hover { width: 34px; }
+
+/* The arrow says which way the thing will move, and it is the only part that
+   changes meaning between the two states. */
+.ln-fab-arrow {
+  width: 9px; height: 9px; flex: none;
+  border-right: 1.6px solid var(--fg-soft);
+  border-bottom: 1.6px solid var(--fg-soft);
+  transform: rotate(135deg);
+  margin-right: -2px;
+  transition: transform .16s ease;
+}
+.ln-fab[data-open="1"] .ln-fab-arrow { transform: rotate(-45deg); margin: 0 0 0 -2px; }
+
+.ln-fab[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ln-fab, .ln-fab-label, .ln-fab-arrow { transition: none; }
+}
+
+/* ---- panel ------------------------------------------------------------- */
+/* Free-floating, not welded to the right edge.
+ *
+ * The first version pinned the panel to the full height of the right-hand side,
+ * which made it feel like a part of the page rather than a tool you are
+ * holding — and on a wide screen it wasted most of its own height. It now has a
+ * size of its own, can be dragged by its header and resized from its bottom
+ * left corner, and remembers where you put it. The defaults still land it where
+ * it used to be, so nobody has to move it to start. */
+.ln-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  top: 16px;
+  width: 468px;
+  max-width: calc(100vw - 32px);
+  z-index: 2147483001;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.ln-panel[hidden] { display: none; }
+
+.ln-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+  touch-action: none;
+}
+.ln-mark {
+  width: 26px; height: 26px; flex: none;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.ln-mark svg { width: 15px; height: 15px; }
+.ln-head-text { min-width: 0; flex: 1; }
+.ln-title { font-weight: 650; letter-spacing: -.01em; }
+.ln-sub {
+  font-size: calc(var(--ln-fs) * 0.8214); color: var(--fg-soft); margin-top: 1px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.ln-lang {
+  display: flex;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ln-lang button {
+  border: 0; background: transparent; color: var(--fg-soft);
+  font: inherit; font-size: calc(var(--ln-fs) * 0.8214); font-weight: 600;
+  padding: 4px 8px; cursor: pointer;
+}
+.ln-lang button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
+
+.ln-x {
+  border: 0; background: transparent; color: var(--fg-soft); flex: none;
+  cursor: pointer; padding: 5px; border-radius: 7px; line-height: 0;
+}
+.ln-x:hover { background: var(--bg-soft); color: var(--fg); }
+.ln-x svg { width: 16px; height: 16px; }
+
+/* ---- tabs -------------------------------------------------------------- */
+.ln-tabs { display: flex; flex-wrap: wrap; gap: 2px; padding: 0 12px; border-bottom: 1px solid var(--line); flex: none; }
+.ln-tab {
+  border: 0; background: transparent; color: var(--fg-soft);
+  font: inherit; font-size: calc(var(--ln-fs) * 0.8929); font-weight: 600;
+  padding: 9px 12px 8px; cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.ln-tab:hover { color: var(--fg); }
+.ln-tab.on { color: var(--accent); border-bottom-color: var(--accent); }
+
+.ln-body { flex: 1; overflow-y: auto; padding: 14px; }
+.ln-body::-webkit-scrollbar { width: 9px; }
+.ln-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 9px; border: 3px solid var(--bg); }
+
+/* ---- settings ---------------------------------------------------------- */
+.ln-settings-section { padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--line); }
+.ln-settings-section:last-of-type { margin-bottom: 12px; }
+.ln-settings-title { font-weight: 650; margin-bottom: 12px; }
+.ln-settings-sizes { display: flex; flex-wrap: wrap; gap: 7px; }
+.ln-setting-size {
+  flex: 1 1 calc(33.333% - 5px); min-width: 92px;
+  border: 1px solid var(--line); border-radius: 7px; padding: 7px 8px;
+  background: var(--bg-soft); color: var(--fg); cursor: pointer; font: inherit;
+  line-height: 1.2; text-align: center;
+}
+.ln-setting-size:hover, .ln-setting-size[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.ln-setting-size[aria-pressed="true"] { background: var(--accent-soft); font-weight: 650; }
+.ln-settings-colours { display: flex; gap: 10px; }
+.ln-setting-colour {
+  width: 28px; height: 28px; padding: 0; border: 2px solid transparent; border-radius: 50%;
+  cursor: pointer; background: var(--ln-swatch); box-shadow: 0 0 0 1px var(--line);
+}
+.ln-setting-colour[data-accent="green"] { --ln-swatch: #0f7a5a; }
+.ln-setting-colour[data-accent="blue"] { --ln-swatch: #1256a8; }
+.ln-setting-colour[data-accent="violet"] { --ln-swatch: #6b3fa0; }
+.ln-setting-colour[data-accent="rose"] { --ln-swatch: #a6325e; }
+.ln-setting-colour[data-accent="slate"] { --ln-swatch: #3f5262; }
+.ln-setting-colour:hover { box-shadow: 0 0 0 2px var(--fg-soft); }
+.ln-setting-colour[aria-pressed="true"] { border-color: var(--bg); box-shadow: 0 0 0 2px var(--fg); }
+.ln-settings-page-layer { margin-top: 0; }
+
+.ln-hint { font-size: calc(var(--ln-fs) * 0.8214); color: var(--fg-soft); margin-bottom: 6px; }
+
+/* ---- first-run intro --------------------------------------------------- */
+.ln-intro {
+  background: var(--accent-soft); border-radius: 10px;
+  padding: 12px; margin-bottom: 14px;
+}
+.ln-intro-title { font-weight: 650; font-size: calc(var(--ln-fs) * 0.9286); color: var(--accent); margin-bottom: 4px; }
+.ln-intro p { margin: 0 0 10px; font-size: calc(var(--ln-fs) * 0.8929); line-height: 1.5; color: var(--fg); }
+.ln-btn-sm { flex: none; padding: 6px 12px; font-size: calc(var(--ln-fs) * 0.8571); }
+
+/* ---- what was read out of the sentence --------------------------------- */
+.ln-found {
+  margin-top: 9px; font-size: calc(var(--ln-fs) * 0.7857); line-height: 1.7; color: var(--fg-soft);
+}
+.ln-found-lead { font-weight: 600; }
+.ln-found-chip {
+  display: inline-block; background: var(--accent-soft); color: var(--accent);
+  border-radius: 5px; padding: 1px 6px; margin-right: 3px; font-weight: 600;
+}
+
+/* ---- live checklist: one line, naming only what is missing ------------- */
+.ln-check { margin-top: 9px; font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.8; color: var(--fg-soft); }
+.ln-check-lead { font-weight: 600; }
+.ln-check-done { color: var(--accent); font-weight: 600; }
+.ln-check-item {
+  border: 0; border-bottom: 1px dashed currentColor; border-radius: 0;
+  padding: 0; font: inherit; font-weight: 600;
+  background: transparent; color: var(--fg-soft); cursor: pointer;
+}
+.ln-check-item:hover { color: var(--accent); }
+
+/* ---- follow-up tab ----------------------------------------------------- */
+.ln-feedback { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.ln-feedback-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.ln-feedback-actions .ln-btn { flex: 0 1 auto; }
+.ln-follow-intro { margin: 0 0 12px; line-height: 1.5; }
+.ln-follow-head {
+  font-size: calc(var(--ln-fs) * 0.7857); font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 7px;
+}
+.ln-follow-list { display: flex; flex-direction: column; gap: 6px; }
+.ln-follow {
+  display: block; width: 100%; text-align: left;
+  border: 1px solid var(--line); border-radius: 10px;
+  background: var(--bg-soft); color: var(--fg);
+  font: inherit; padding: 9px 11px; cursor: pointer;
+}
+.ln-follow:hover { border-color: var(--accent); background: var(--bg); }
+.ln-follow-label { display: block; font-weight: 650; font-size: calc(var(--ln-fs) * 0.8929); }
+.ln-follow-does { display: block; font-size: calc(var(--ln-fs) * 0.7857); color: var(--fg-soft); line-height: 1.45; margin-top: 1px; }
+.ln-follow-why {
+  display: inline-block; margin-top: 5px; font-size: calc(var(--ln-fs) * 0.75); font-weight: 600;
+  color: var(--accent); background: var(--accent-soft);
+  border-radius: 5px; padding: 1px 6px;
+}
+.ln-follow-more { margin-top: 10px; }
+
+/* ---- answering ChatGPT's clarifying questions -------------------------- */
+.ln-questions {
+  border: 1px solid var(--accent); background: var(--accent-soft);
+  border-radius: 10px; padding: 12px; margin-bottom: 16px;
+}
+.ln-q-title { font-weight: 700; font-size: calc(var(--ln-fs) * 0.8929); color: var(--accent); margin-bottom: 3px; }
+.ln-questions .ln-hint { margin-bottom: 10px; }
+.ln-q + .ln-q { margin-top: 9px; }
+.ln-q-text { font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.45; margin-bottom: 4px; color: var(--fg); }
+.ln-q-input { background: var(--bg); }
+.ln-questions .ln-btn { width: 100%; margin-top: 11px; }
+
+.ln-grab { display: block; margin-top: 9px; }
+
+/* ---- history ----------------------------------------------------------- */
+.ln-hist { margin-top: 14px; }
+.ln-hist-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 9px; }
+.ln-hist-item {
+  text-align: left; width: 100%;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg-soft); color: var(--fg-soft);
+  font: inherit; font-size: calc(var(--ln-fs) * 0.8214); padding: 6px 9px; cursor: pointer;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ln-hist-item:hover { border-color: var(--accent); color: var(--fg); }
+
+.ln-det-count { font-weight: 400; color: var(--fg-soft); }
+
+.ln-l { display: block; font-size: calc(var(--ln-fs) * 0.8571); font-weight: 600; margin-bottom: 5px; }
+
+/* ---- goal chips: what the user wants back ------------------------------ */
+.ln-goals { display: flex; flex-wrap: wrap; gap: 6px; }
+.ln-goal {
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 12px; font: inherit; font-size: calc(var(--ln-fs) * 0.8571);
+  background: var(--bg-soft); color: var(--fg); cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.ln-goal:hover { border-color: var(--accent); }
+.ln-goal.on {
+  background: var(--accent); border-color: var(--accent);
+  color: var(--accent-fg); font-weight: 600;
+}
+
+/* ---- router verdict ---------------------------------------------------- */
+.ln-route {
+  margin-top: 9px; font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.45;
+  background: var(--bg-soft); color: var(--fg-soft);
+  border-radius: 8px; padding: 7px 10px;
+}
+.ln-route[data-rec="model"] { background: var(--accent-soft); color: var(--accent); }
+.ln-route[data-rec="leave"] { background: var(--accent-soft); color: var(--accent); }
+.ln-route[data-rec="reorder"] { background: var(--accent-soft); color: var(--accent); }
+.ln-route[data-rec="limit"] { background: var(--warn-soft); color: var(--warn); }
+.ln-route[hidden] { display: none; }
+
+.ln-link {
+  border: 0; background: transparent; color: var(--accent);
+  font: inherit; font-size: calc(var(--ln-fs) * 0.8214); font-weight: 600;
+  cursor: pointer; padding: 0;
+}
+.ln-link:hover { text-decoration: underline; }
+
+.ln textarea, .ln input[type="text"], .ln select {
+  width: 100%;
+  font: inherit;
+  color: var(--fg);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 10px;
+  resize: vertical;
+}
+.ln textarea:focus, .ln input:focus, .ln select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  background: var(--bg);
+}
+/* Buttons had a focus ring only where the browser supplied one, and inside a
+ * shadow root with a custom background that is easy to lose. Every focusable
+ * control gets the same visible ring when reached by keyboard. */
+.ln button:focus-visible,
+.ln [role="tab"]:focus-visible,
+.ln [role="radio"]:focus-visible,
+.ln a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Announced, never shown: a short sentence for a screen reader at moments a
+ * sighted user sees something appear. clip-path over display:none because a
+ * hidden element is not announced at all. */
+.ln-sr {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden; white-space: nowrap;
+  clip: rect(0 0 0 0); clip-path: inset(50%);
+}
+
+/* Motion here is decoration on top of information that is already legible
+ * without it, so there is nothing to lose by turning it off. */
+@media (prefers-reduced-motion: reduce) {
+  .ln *, .ln *::before, .ln *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+.ln textarea::placeholder, .ln input[type="text"]::placeholder { color: var(--fg-soft); opacity: 1; }
+.ln-main-input { min-height: 104px; }
+
+.ln-row { margin-top: 12px; }
+.ln-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.ln-grid .ln-row { margin-top: 0; }
+
+details.ln-det { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 11px; }
+details.ln-det > summary {
+  cursor: pointer; font-size: calc(var(--ln-fs) * 0.8571); font-weight: 600; color: var(--accent);
+  list-style: none; display: flex; align-items: center; gap: 6px;
+}
+details.ln-det > summary::-webkit-details-marker { display: none; }
+details.ln-det > summary::before { content: "▸"; font-size: calc(var(--ln-fs) * 0.7143); transition: transform .15s; }
+details.ln-det[open] > summary::before { transform: rotate(90deg); }
+.ln-det-inner { padding-top: 11px; }
+
+/* A closed <details> must actually hide its contents.
+ *
+ * The browser's own rule is `details:not([open]) > *:not(summary) {
+ * display: none }`, and any author rule with a `display` beats it — which
+ * `.ln-det-inner { padding-top }` did not, but the flex and block rules on the
+ * rows inside it did. The result looked collapsed and was not: 658px of laid-out
+ * form, ten fields still in the tab order, all of it read out by a screen
+ * reader. Someone navigating by keyboard tabbed through ten inputs that were
+ * not on screen. */
+details.ln-det:not([open]) > .ln-det-inner { display: none; }
+
+.ln-toggles { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.ln-chk {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 5px 11px 5px 9px; font-size: calc(var(--ln-fs) * 0.8571); cursor: pointer;
+  background: var(--bg-soft); user-select: none;
+}
+.ln-chk input { accent-color: var(--accent); margin: 0; }
+.ln-chk:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+.ln-actions { display: flex; gap: 8px; margin-top: 14px; }
+.ln-btn {
+  flex: 1; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--bg-soft); color: var(--fg);
+  font: inherit; font-weight: 600; padding: 9px 10px;
+  cursor: pointer; text-align: center; line-height: 1.25;
+}
+.ln-btn:hover { border-color: var(--accent); }
+.ln-btn-clear { flex: 0 0 auto; }
+.ln-btn small { display: block; font-weight: 400; font-size: calc(var(--ln-fs) * 0.75); color: var(--fg-soft); margin-top: 1px; }
+.ln-btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.ln-btn-primary small { color: var(--accent-fg); opacity: .75; }
+.ln-btn-primary:hover { filter: brightness(1.06); }
+.ln-settings-tour { display: block; margin-top: 14px; }
+
+.ln-result { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 13px; }
+.ln-result[hidden] { display: none; }
+.ln-result-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.ln-result-title { display: flex; align-items: baseline; flex: 1 1 auto; flex-wrap: wrap; gap: 7px; min-width: 0; }
+.ln-result-head .ln-l { margin-bottom: 0; }
+.ln-result-updated { color: var(--accent); font-size: calc(var(--ln-fs) * 0.75); font-weight: 600; }
+.ln-result-updated[hidden] { display: none; }
+.ln-note {
+  font-size: calc(var(--ln-fs) * 0.8214); padding: 7px 9px; border-radius: 8px;
+  background: var(--bg-soft); color: var(--fg-soft); margin-bottom: 9px;
+}
+.ln-note[data-kind="ask"] { background: var(--warn-soft); color: var(--warn); }
+.ln-out {
+  width: 100%; min-height: 190px; font-size: calc(var(--ln-fs) * 0.8929);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height: 1.55; white-space: pre-wrap;
+}
+.ln-small-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 9px; }
+.ln-small-actions .ln-btn { flex: 1 1 120px; min-width: 0; padding: 7px 10px; font-size: calc(var(--ln-fs) * 0.8929); }
+
+.ln-toast {
+  position: fixed; right: 24px; bottom: 24px; z-index: 2147483002;
+  background: var(--fg); color: var(--bg);
+  padding: 9px 14px; border-radius: 9px; font-size: calc(var(--ln-fs) * 0.9286); font-weight: 500;
+  box-shadow: var(--shadow); opacity: 0; transform: translateY(6px);
+  transition: opacity .18s, transform .18s; pointer-events: none;
+}
+.ln-toast[data-show] { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 560px) {
+  .ln-panel { left: 8px; right: 8px; top: 8px; bottom: 8px; width: auto; max-width: calc(100vw - 16px); }
+  .ln-fab { height: 76px; }
+}
+
+.ln-follow-anyway { display: block; margin-bottom: 4px; }
+
+/* ---- move-chat tab ------------------------------------------------------ */
+.ln-mv-title { font-weight: 700; font-size: calc(var(--ln-fs) * 0.9286); margin-bottom: 4px; }
+.ln-mv-size {
+  font-size: calc(var(--ln-fs) * 0.8214); font-weight: 600; color: var(--fg-soft);
+  background: var(--bg-soft); border-radius: 8px; padding: 8px 10px; margin: 10px 0 4px;
+}
+.ln-mv-size[data-long="true"] { background: var(--accent-soft); color: var(--accent); }
+.ln-mv-parts { margin-top: 0; }
+.ln-step { margin-top: 14px; }
+.ln-step .ln-btn { width: 100%; }
+.ln-step .ln-hint { margin: 5px 0 0; }
+.ln-mv-result { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+.ln-mv-result .ln-out { min-height: 150px; }
+.ln-mv-adds {
+  margin: 12px 0 0; padding: 9px 10px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); line-height: 1.5;
+}
+.ln-mv-note {
+  font-size: calc(var(--ln-fs) * 0.8214); padding: 7px 9px; border-radius: 8px;
+  background: var(--bg-soft); color: var(--fg-soft); margin-bottom: 9px;
+}
+
+/* ---- memory-drift warning ----------------------------------------------- */
+.ln-mem {
+  border: 1px solid var(--warn); background: var(--warn-soft);
+  border-radius: 10px; padding: 12px; margin-bottom: 14px;
+}
+.ln-mem-title { font-weight: 700; font-size: calc(var(--ln-fs) * 0.8929); color: var(--warn); margin-bottom: 3px; }
+.ln-mem .ln-hint { color: var(--fg); margin-bottom: 8px; }
+.ln-mem-found { margin-bottom: 5px; }
+.ln-mem-quotes { display: flex; flex-wrap: wrap; gap: 5px; }
+.ln-mem-quote {
+  font-size: calc(var(--ln-fs) * 0.7857); font-style: italic;
+  border: 1px solid var(--warn); border-radius: 5px;
+  padding: 2px 7px; color: var(--warn);
+}
+
+/* The insert button must stay reachable when the prompt is forty lines long. */
+.ln-small-actions {
+  position: sticky; bottom: 0; z-index: 2;
+  background: var(--bg); padding-top: 9px; margin-top: 0;
+  box-shadow: 0 -8px 12px -8px var(--bg);
+}
+.ln-out { transition: height .12s ease; }
+
+.ln-model-note {
+  margin-top: 7px; font-size: calc(var(--ln-fs) * 0.7857); line-height: 1.5;
+  color: var(--fg-soft); background: var(--bg-soft);
+  border-radius: 8px; padding: 6px 9px;
+}
+.ln-model-note[data-tier="deep"] { background: var(--warn-soft); color: var(--warn); }
+
+/* ---- handle badge: the only signal when the panel is shut ----------------
+   It used to hang off the corner of a floating pill. The tab clips its own
+   overflow, so the badge lives inside it — and at 18 pixels of width there is
+   no room for a number, so at rest it is a dot and it grows into the count
+   once the tab is open far enough to hold it. A dot still answers the only
+   question that matters when the panel is closed: is there something here. */
+.ln-fab-badge {
+  position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+  width: 7px; height: 7px; padding: 0;
+  display: grid; place-items: center; overflow: hidden;
+  border-radius: 999px; font-size: 0; font-weight: 700; line-height: 1;
+  background: var(--accent); color: var(--accent-fg);
+  transition: width .16s ease, height .16s ease, font-size .12s ease;
+}
+.ln-fab:hover .ln-fab-badge,
+.ln-fab:focus-visible .ln-fab-badge,
+.ln-fab[data-open="1"] .ln-fab-badge {
+  width: auto; min-width: 19px; height: 18px; padding: 0 5px; font-size: calc(var(--ln-fs) * 0.7857);
+}
+.ln-fab-badge[data-kind="warn"] { background: var(--warn); color: var(--bg); }
+.ln-mv-wait {
+  margin-top: 7px; font-size: calc(var(--ln-fs) * 0.8214); font-weight: 600;
+  color: var(--accent); background: var(--accent-soft);
+  border-radius: 8px; padding: 6px 9px;
+}
+.ln-tab { display: inline-flex; align-items: center; gap: 6px; }
+.ln-dot {
+  width: 6px; height: 6px; border-radius: 999px;
+  background: var(--accent); display: inline-block;
+}
+.ln-dot[hidden] { display: none !important; }
+
+/* ---- collected parts ----------------------------------------------------
+ * Shown only when the user has said more is coming, or has started
+ * collecting. It is an offer, not furniture. */
+.ln-parts {
+  margin-top: 12px; padding: 11px 12px;
+  border: 1px solid var(--accent); border-radius: 10px;
+  background: var(--accent-soft);
+}
+.ln-parts-head { font-weight: 600; font-size: calc(var(--ln-fs) * 0.8929); color: var(--accent); }
+.ln-parts-why { font-size: calc(var(--ln-fs) * 0.8214); color: var(--fg-soft); margin-top: 4px; line-height: 1.45; }
+.ln-parts-list { margin-top: 9px; }
+.ln-parts-list:empty { display: none; }
+.ln-part {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px; margin-top: 5px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+  font-size: calc(var(--ln-fs) * 0.8571);
+}
+.ln-part-n {
+  flex: none; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-fg);
+  font-size: calc(var(--ln-fs) * 0.75); font-weight: 700; line-height: 18px; text-align: center;
+}
+.ln-part-text { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ln-part-count { flex: none; color: var(--fg-soft); font-size: calc(var(--ln-fs) * 0.7857); }
+.ln-part-x {
+  flex: none; border: 0; background: none; cursor: pointer;
+  color: var(--fg-soft); font-size: calc(var(--ln-fs) * 1.1429); line-height: 1; padding: 0 2px;
+}
+.ln-part-x:hover { color: var(--fg); }
+.ln-parts-actions { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
+
+/* ---- how this works -------------------------------------------------------
+ * An overlay, not a fifth tab: it covers the body so opening it never costs
+ * you your place in what you were writing. Closed by default; one click from
+ * the header; Escape backs out of it before it closes the panel. */
+.ln-help-btn {
+  flex: none; width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid var(--line); background: none; color: var(--fg-soft);
+  font: inherit; font-size: calc(var(--ln-fs) * 0.9286); font-weight: 600; line-height: 1; cursor: pointer;
+}
+.ln-help-btn:hover { border-color: var(--accent); color: var(--accent); }
+.ln-panel[data-help="1"] .ln-body { display: none; }
+.ln-panel[data-help="1"] .ln-tabs { display: none; }
+
+.ln-help { overflow-y: auto; padding: 14px 16px 20px; flex: 1 1 auto; }
+.ln-help-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.ln-help-title { font-weight: 700; font-size: var(--ln-fs); }
+.ln-help-lead { color: var(--fg-soft); font-size: calc(var(--ln-fs) * 0.8571); margin: 6px 0 12px; line-height: 1.5; }
+
+.ln-help-item { border-top: 1px solid var(--line); }
+.ln-help-item:last-child { border-bottom: 1px solid var(--line); }
+.ln-help-q {
+  display: flex; gap: 9px; align-items: baseline; width: 100%;
+  background: none; border: 0; cursor: pointer; text-align: left;
+  color: var(--fg); font: inherit; font-size: calc(var(--ln-fs) * 0.9286); font-weight: 600; line-height: 1.45; padding: 11px 0;
+}
+.ln-help-q:hover { color: var(--accent); }
+.ln-help-mark {
+  flex: none; width: 15px; color: var(--accent); font-weight: 700;
+  font-size: var(--ln-fs); line-height: 1.45;
+}
+.ln-help-item[data-open="1"] { background: var(--bg-soft); }
+.ln-help-a { padding: 0 0 12px 24px; }
+/* Paragraph breaks in these answers are the pauses — the places where the
+   reader is meant to stop and take the last idea before the next one starts.
+   Rendered without a gap they were three sentences in a wall, which is the
+   layout the whole explainer exists to avoid. */
+.ln-help-a p { margin: 0 0 10px; font-size: calc(var(--ln-fs) * 0.8929); line-height: 1.6; color: var(--fg-soft); }
+.ln-help-a p:last-of-type { margin-bottom: 0; }
+
+/* The line that does the actual teaching, set apart so it reads as a takeaway
+   rather than as more prose. */
+.ln-help-self {
+  margin-top: 9px; padding: 8px 10px;
+  background: var(--accent-soft); color: var(--accent);
+  border-radius: 8px; font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.5; font-weight: 600;
+}
+
+
+/* ---- moving and resizing ------------------------------------------------- */
+.ln-head { cursor: grab; user-select: none; }
+.ln-head:active { cursor: grabbing; }
+/* The controls inside the header must stay clickable, not draggable. */
+.ln-head button, .ln-head .ln-lang { cursor: pointer; }
+.ln-panel[data-dragging="1"] { transition: none; user-select: none; }
+
+/* Bottom-left, because the panel's default home is the right edge — a handle
+   in the bottom-right corner would sit off-screen there. */
+/* One grip per corner. The two top ones sit above the header, so they need a
+   z-index over it; they are siblings of .ln-head rather than children, so a
+   pointerdown on a grip never reaches the header's move handler. */
+.ln-grip { position: absolute; width: 18px; height: 18px; z-index: 12; touch-action: none; }
+.ln-grip-sw { left: 0;  bottom: 0; cursor: nesw-resize; }
+.ln-grip-se { right: 0; bottom: 0; cursor: nwse-resize; }
+.ln-grip-nw { left: 0;  top: 0;    cursor: nwse-resize; }
+.ln-grip-ne { right: 0; top: 0;    cursor: nesw-resize; }
+
+/* The little corner bracket. Drawn once and rotated, so all four are the same
+   7px angle pointing outward. */
+.ln-grip::before {
+  content: ""; position: absolute; width: 7px; height: 7px;
+  border-left: 2px solid var(--fg-soft); border-bottom: 2px solid var(--fg-soft);
+  opacity: .4; border-radius: 0 0 0 2px;
+}
+.ln-grip-sw::before { left: 5px;  bottom: 5px; }
+.ln-grip-se::before { right: 5px; bottom: 5px; transform: rotate(-90deg); }
+.ln-grip-ne::before { right: 5px; top: 5px;    transform: rotate(180deg); }
+.ln-grip-nw::before { left: 5px;  top: 5px;    transform: rotate(90deg); }
+
+/* Quieter at the top, where they overlap the header and would otherwise read
+   as decoration someone forgot to remove. They come up on hover like the
+   others. */
+.ln-grip-nw::before, .ln-grip-ne::before { opacity: 0; }
+.ln-grip:hover::before { opacity: 1; border-color: var(--accent); }
+
+/* What the build did differently for this assistant and this model. A list
+   rather than a sentence: the reader is scanning for whether something
+   surprising happened, not reading prose. */
+/* ---- what Lantern understood -------------------------------------------- */
+.ln-understood { margin: 10px 0 0; }
+.ln-refine-link { display: inline-block; margin: 7px 0 0; font-size: calc(var(--ln-fs) * 0.88); }
+
+/* ---- what else this assistant can do -------------------------------------
+   A row of chips directly under the box. They are not settings — they change
+   what is being asked for — so they are the one control that does not wait
+   behind a fold. One note at a time underneath, for the chip last touched. */
+.ln-caps {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin: 8px 0 0;
+}
+.ln-cap {
+  font: inherit;
+  font-size: calc(var(--ln-fs) * 0.86);
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--fg-soft);
+  cursor: pointer;
+}
+.ln-cap:hover { border-color: var(--accent); color: var(--accent); }
+.ln-cap.on {
+  background: var(--accent); border-color: var(--accent);
+  color: var(--accent-fg); font-weight: 600;
+}
+.ln-cap.ln-cap-no { text-decoration: line-through; opacity: .72; }
+.ln-cap.ln-cap-no.on { background: var(--bg); color: var(--fg-soft); border-color: var(--line); font-weight: 400; }
+.ln-caps-note {
+  margin: 7px 0 0;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+.ln-caps-note p { margin: 0 0 4px; line-height: 1.45; }
+.ln-caps-note p:last-child { margin-bottom: 0; }
+.ln-cap-what { font-size: calc(var(--ln-fs) * 0.9); color: var(--fg); }
+.ln-cap-where { font-size: calc(var(--ln-fs) * 0.86); color: var(--fg-soft); }
+.ln-cap-cost { font-size: calc(var(--ln-fs) * 0.86); color: var(--warn); }
+
+/* ---- the verdict ---------------------------------------------------------
+   Sits directly under the note, above the prompt itself, because the thing it
+   most often has to say is "there is nothing below this worth reading" and
+   that has to arrive before the reading starts. */
+.ln-verdict {
+  margin: 6px 0 10px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--line);
+}
+.ln-verdict p {
+  margin: 0 0 4px;
+  font-size: calc(var(--ln-fs) * 0.93);
+  line-height: 1.45;
+  color: var(--fg);
+}
+.ln-verdict .ln-verdict-cost {
+  font-size: calc(var(--ln-fs) * 0.85);
+  color: var(--fg-soft);
+  margin: 0 0 6px;
+}
+.ln-verdict .ln-verdict-help {
+  font-size: calc(var(--ln-fs) * 0.9);
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 5px;
+}
+.ln-verdict-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.ln-verdict .ln-verdict-more { font-size: calc(var(--ln-fs) * 0.88); }
+
+.ln-adapted {
+  margin-top: 8px; padding: 8px 10px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--fg-soft);
+  font-size: calc(var(--ln-fs) * 0.82); line-height: 1.5;
+}
+.ln-adapted b { color: var(--accent); font-weight: 600; }
+.ln-adapted ul { margin: 4px 0 0; padding-left: 16px; }
+.ln-adapted li { margin: 2px 0; }
+
+/* ---- is Lantern working here -------------------------------------------- */
+.ln-selfcheck { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.ln-selfcheck-out { margin-top: 10px; font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.7; }
+.ln-check-row { display: flex; gap: 8px; align-items: baseline; }
+.ln-check-row b { font-weight: 600; }
+.ln-yes { color: var(--accent); }
+.ln-no { color: var(--warn); }
+/* The third state: nothing to report yet. Not a pass, not a failure — an empty
+   chat has no last answer, and marking that red taught people to distrust the
+   red marks that mean something. */
+.ln-na { color: var(--fg-soft); opacity: .7; }
+.ln-check-live {
+  margin-top: 6px; font-size: calc(var(--ln-fs) * 0.7857); color: var(--fg-soft); opacity: .75;
+}
+.ln-check-note {
+  margin-top: 8px; padding: 7px 9px; border-radius: 7px;
+  background: var(--bg-soft); color: var(--fg-soft);
+  font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.5;
+}
+.ln-check-raw {
+  margin-top: 8px; padding: 7px 9px; border-radius: 7px;
+  background: var(--bg-soft); color: var(--fg-soft);
+  font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.5; word-break: break-word;
+}
+.ln-check-work {
+  margin-top: 8px; padding: 7px 9px; border-radius: 7px;
+  background: var(--bg-soft); color: var(--fg-soft);
+  font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.5; word-break: break-word;
+}
+
+/* The second level of the explainer: for a reader who wants the mechanism, not
+   more instructions. Folded away so the first answer stays short. */
+.ln-help-more {
+  display: flex; gap: 9px; align-items: baseline; width: 100%;
+  background: none; border: 0; cursor: pointer; text-align: left;
+  color: var(--accent); font: inherit; font-size: calc(var(--ln-fs) * 0.8571); font-weight: 600; line-height: 1.45;
+  padding: 10px 0 4px;
+}
+.ln-help-more:hover { text-decoration: underline; }
+.ln-help-ma {
+  border-left: 2px solid var(--line);
+  padding: 2px 0 4px 12px; margin: 2px 0 4px 5px;
+}
+.ln-help-ma p {
+  margin: 0 0 8px; font-size: calc(var(--ln-fs) * 0.8929); line-height: 1.6; color: var(--fg-soft);
+}
+.ln-help-ma p:last-child { margin-bottom: 0; }
+
+/* Depth. Each level steps in a little and gets a little quieter, so a reader
+   three questions deep can see how far in they are without being told. The
+   button inside an answer needs air above it, or the follow-up question reads
+   as the last line of the paragraph before it. */
+.ln-help-ma > .ln-help-more { margin-top: 10px; }
+.ln-help-more[data-depth="2"] { font-size: calc(var(--ln-fs) * 0.8214); }
+.ln-help-more[data-depth="3"] { font-size: calc(var(--ln-fs) * 0.8214); opacity: .92; }
+.ln-help-ma[data-depth="2"] { border-left-style: dashed; }
+.ln-help-ma[data-depth="3"] { border-left-style: dotted; }
+.ln-help-ma[data-depth="2"] p,
+.ln-help-ma[data-depth="3"] p { font-size: calc(var(--ln-fs) * 0.8571); }
+
+/* Shown only when the provider is actually having a problem. */
+.ln-status {
+  margin-top: 8px; padding: 9px 11px; border-radius: 9px;
+  font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.45;
+  background: var(--warn-soft); color: var(--warn);
+  border: 1px solid var(--warn);
+}
+.ln-status[data-level="major"] { font-weight: 600; }
+
+/* Said before it happens, so an attachment is not a surprise. Informational,
+   not a warning — the assistant reads attachments perfectly well, and the
+   anxiety is the actual cost. */
+.ln-paste {
+  margin-top: 7px; padding: 8px 10px; border-radius: 8px;
+  background: var(--bg-soft); color: var(--fg-soft);
+  font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.5;
+}
+
+/* ---- later: written now, sent by hand when the limit is back -------------- */
+.ln-limit {
+  margin: 10px 0; padding: 9px 11px; border-radius: 9px;
+  background: var(--warn-soft); color: var(--warn); border: 1px solid var(--warn);
+  font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.45;
+}
+.ln-queue-empty { margin-top: 12px; color: var(--fg-soft); font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.5; }
+.ln-queue-list:empty { display: none; }
+.ln-queue-foot { margin-top: 10px; }
+.ln-q {
+  margin-top: 9px; padding: 9px 10px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft);
+}
+.ln-q-head { display: flex; align-items: baseline; gap: 8px; }
+.ln-q-n {
+  flex: none; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-fg);
+  font-size: calc(var(--ln-fs) * 0.75); font-weight: 700; line-height: 18px; text-align: center;
+}
+.ln-q-when { color: var(--fg-soft); font-size: calc(var(--ln-fs) * 0.7857); }
+.ln-q-text {
+  margin-top: 6px; font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.45;
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.ln-q-acts { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
+
+/* --- the drift notice ----------------------------------------------------
+   Shown in the handover tab when the chat has got long, and mirrored as one
+   link in the follow-up tab, because that is where the user is standing when
+   the risk is live. Deliberately quiet: it is a fact about long chats, not an
+   alarm, and an alarm that fires every long chat stops being read. */
+.ln-drift { margin: 10px 0 4px; padding: 10px 12px; border-radius: 10px;
+  background: var(--bg-soft); border-left: 3px solid var(--accent); }
+.ln-drift-line { margin: 0 0 8px; font-size: calc(var(--ln-fs) * 0.8929); line-height: 1.55; color: var(--fg-soft); }
+.ln-drift-line:last-child { margin-bottom: 0; }
+.ln-drift-line:first-child { color: var(--fg); }
+.ln-drift-nudge { display: block; margin-top: 10px; text-align: left; }
+
+/* --- saving has stopped --------------------------------------------------
+   Loud on purpose, and only this one. Everything else in the panel is a
+   suggestion; this is the one state where carrying on costs the user work
+   they will not get back. */
+.ln-detached { margin: 0 14px 10px; padding: 12px 14px; border-radius: 10px;
+  background: var(--warn-soft); border: 1px solid var(--warn); }
+.ln-detached-text { font-size: calc(var(--ln-fs) * 0.8929); line-height: 1.55; color: var(--fg); margin-bottom: 10px; }
+.ln-detached .ln-btn { width: 100%; }
+
+/* --- the first-run tab guide --------------------------------------------
+   Four one-word tabs are four questions to someone who has not seen this
+   before, and three of them only make sense once an answer exists. Answering
+   them once, here, is cheaper than four empty states. */
+.ln-intro-tabs-label { font-size: calc(var(--ln-fs) * 0.8214); color: var(--fg-soft); margin: 10px 0 4px; }
+.ln-intro-tabs { margin: 0 0 10px; padding-left: 16px; }
+.ln-intro-tabs li { font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.5; color: var(--fg-soft); margin-bottom: 4px; }
+.ln-intro-tabs li b { color: var(--fg); font-weight: 600; }
+.ln-intro-never { font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.5; color: var(--fg);
+  border-left: 3px solid var(--accent); padding-left: 9px; margin: 0 0 10px; }
+
+/* --- who made this, and who did not --------------------------------------
+   Every one of the three vendors' trademark terms reduces to the same
+   requirement: do not imply they built it or endorse it. This is that, said
+   once, at the bottom of the place people go when they want to know what
+   Lantern is. */
+.ln-help-foot { margin: 18px 14px 4px; padding-top: 12px; border-top: 1px solid var(--line);
+  font-size: calc(var(--ln-fs) * 0.7857); line-height: 1.5; color: var(--fg-soft); }
+
+/* --- the tennis switch ---------------------------------------------------
+   A register switch, not a language one — it works in both. Sits with the
+   explainer because that is the only thing it changes, and set apart from the
+   checkbox row in the prompt tab so it does not read as a prompt option. */
+.ln-tennis-toggle { display: inline-flex; margin: 2px 14px 12px; }
+
+/* --- which assistant for what --------------------------------------------
+   Inside the help panel, not a tab of its own: a thing you look up once, not
+   a thing you need in front of you while you write. */
+.ln-compare-open { display: block; margin: 0 14px 12px; text-align: left; }
+.ln-compare { padding: 0 14px 8px; }
+.ln-cmp-note { font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.5; color: var(--fg-soft);
+  border-left: 2px solid var(--line); padding-left: 9px; margin: 0 0 14px; }
+.ln-cmp-choose { display: grid; gap: 10px; margin-bottom: 18px; }
+.ln-cmp-row { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.ln-cmp-row:last-child { border-bottom: none; padding-bottom: 0; }
+.ln-cmp-when { font-size: calc(var(--ln-fs) * 0.8929); font-weight: 600; color: var(--fg); margin: 0 0 3px; line-height: 1.4; }
+.ln-cmp-pick { font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.5; color: var(--fg-soft); }
+.ln-cmp-why { margin-left: 6px; }
+.ln-cmp-name { color: var(--accent); font-weight: 600; text-decoration: none;
+  border-bottom: 1px solid transparent; }
+.ln-cmp-name:hover, .ln-cmp-name:focus-visible { border-bottom-color: var(--accent); }
+.ln-cmp-card { border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; margin-bottom: 10px; background: var(--bg-soft); }
+.ln-cmp-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.ln-cmp-head .ln-cmp-name { font-size: var(--ln-fs); }
+.ln-cmp-by { font-size: calc(var(--ln-fs) * 0.7857); color: var(--fg-soft); }
+.ln-cmp-good, .ln-cmp-bad { font-size: calc(var(--ln-fs) * 0.8571); line-height: 1.55; margin: 0 0 8px; }
+.ln-cmp-good { color: var(--fg); }
+.ln-cmp-bad { color: var(--fg-soft); padding-left: 9px; border-left: 2px solid var(--warn); margin-bottom: 0; }
+.ln-cmp-foot { font-size: calc(var(--ln-fs) * 0.8214); line-height: 1.55; color: var(--fg-soft);
+  border-top: 1px solid var(--line); padding-top: 12px; margin: 14px 0 0; }

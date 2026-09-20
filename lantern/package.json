@@ -1,0 +1,18 @@
+{
+  "name": "lantern-prompt-helper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local-first prompt helper Chrome extension checks.",
+  "scripts": {
+    "check": "node test/check-syntax.js",
+    "test": "node test/run-tests.js",
+    "test:browser": "node --test test/browser.test.js",
+    "build": "node build.js",
+    "audit:usefulness": "node tools/usefulness-audit.js",
+    "release:check": "node tools/release-check.js",
+    "verify": "npm run check && npm test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

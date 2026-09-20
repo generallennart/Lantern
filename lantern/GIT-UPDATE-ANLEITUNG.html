@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern aktualisieren</title>
+<style>
+:root { --fg:#1b1d1c; --soft:#59615d; --line:#d7dcda; --bg:#f8f9f7; --card:#fff; --accent:#0f7a5a; --accent-soft:#e8f4ef; --warn:#8a5a00; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.58 system-ui, sans-serif; }
+main { max-width:760px; margin:0 auto; padding:32px 20px 64px; }
+h1 { margin:0 0 8px; font-size:30px; }
+h2 { margin:0 0 8px; font-size:21px; }
+p { margin:0 0 10px; }
+.card { margin:16px 0; padding:20px; border:1px solid var(--line); border-radius:10px; background:var(--card); }
+.note { border-left:4px solid var(--accent); background:var(--accent-soft); padding:12px 14px; margin:16px 0; }
+.warn { border-left-color:var(--warn); background:#fff7e7; }
+ol { margin:10px 0 0; padding-left:25px; }
+li { margin:8px 0; }
+code { background:#eef1ef; border:1px solid var(--line); border-radius:5px; padding:2px 6px; font:15px ui-monospace, monospace; word-break:break-word; }
+details { margin-top:22px; padding:14px 16px; border:1px solid var(--line); border-radius:9px; background:var(--card); }
+summary { cursor:pointer; font-weight:700; }
+small { color:var(--soft); }
+</style>
+</head>
+<body>
+<main>
+<h1>Lantern aktualisieren</h1>
+<p>Diese Seite kann auftauchen, weil Lantern eine neuere offizielle Version auf GitHub gefunden hat.</p>
+<div class="note"><b>Warum ist das sicher?</b> Lantern fragt nur die oeffentliche Versionsnummer des offiziellen Projekts ab. Es werden keine Chats, Texte, Konten, Kennungen oder Passwoerter uebertragen. GitHub sieht dabei nur normale technische Verbindungsdaten wie bei jedem Webseitenaufruf, zum Beispiel deine IP-Adresse. Diese Seite und die Dateien kommen nur aus dem Ordner, den du selbst eingerichtet hast.</div>
+
+<section class="card">
+<h2>Wenn du Lantern mit Git eingerichtet hast</h2>
+<ol>
+<li>Oeffne deinen Lantern-Ordner in <b>Dokumente</b>.</li>
+<li>Mache einen Doppelklick auf <code>AKTUALISIEREN.cmd</code>.</li>
+<li>Wenn Chrome aufgeht, suche Lantern auf <code>chrome://extensions</code> und klicke auf den Kreis-Pfeil zum <b>Neu laden</b>.</li>
+<li>Lade offene ChatGPT-, Claude- oder Gemini-Seiten einmal mit <code>F5</code> neu.</li>
+</ol>
+<p><small>Das Skript prüft zuerst die genaue offizielle Adresse <code>https://github.com/generallennart/Lantern.git</code>, den Hauptzweig und eigene Änderungen. Erst dann verwendet es <code>git pull --ff-only</code>. Eigene Änderungen werden nicht zusammengeführt oder überschrieben.</small></p>
+</section>
+
+<section class="card">
+<h2>Wenn du Git noch nicht eingerichtet hast</h2>
+<ol>
+<li>Oeffne den Ordner, aus dem du Lantern gerade installiert hast.</li>
+<li>Mache einen Doppelklick auf <code>INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd</code>.</li>
+<li>Falls Git fehlt, oeffnet sich nur die offizielle Git-Downloadseite. Installiere Git mit den Voreinstellungen und starte die Datei danach noch einmal.</li>
+<li>Die Datei legt Lantern in <b>Dokumente</b> ab, oeffnet die große Lantern-Anleitung und <code>chrome://extensions</code>.</li>
+<li>In Chrome Entwicklermodus einschalten, auf <b>Entpackte Erweiterung laden</b> klicken und genau diesen Ordner auswählen: <code>Dokumente\Lantern\lantern</code>.</li>
+</ol>
+<p>Du brauchst dafuer <b>kein GitHub-Konto</b> und kein Passwort. Auf einem
+verwalteten Arbeitsrechner kann die Git-Installation durch die IT gesperrt
+sein; dann bleib beim ZIP-Weg oder frage die IT.</p>
+</section>
+
+<section class="card">
+<h2>Wenn du lieber bei ZIP-Dateien bleibst</h2>
+<ol>
+<li>Klicke im Lantern-Menue auf <b>Release ansehen</b>.</li>
+<li>Lade die neue ZIP-Datei herunter und entpacke sie.</li>
+<li>Ersetze nur den alten <code>lantern</code>-Ordner durch den neuen.</li>
+<li>Oeffne <code>chrome://extensions</code>, klicke bei Lantern auf Neu laden und druecke auf offenen Chat-Seiten <code>F5</code>.</li>
+</ol>
+</section>
+
+<div class="note warn"><b>Vollautomatisch geht es erst mit dem Chrome Web Store.</b> Chrome aktualisiert Erweiterungen aus dem Store selbst. Eine lokal geladene Erweiterung darf sich aus Sicherheitsgruenden nicht selbst ersetzen. Bis dahin ist der Doppelklick auf <code>AKTUALISIEREN.cmd</code> der kuerzeste sichere Weg.</div>
+
+<details>
+<summary>English</summary>
+<p>This page appears only because Lantern found a newer public version in its official GitHub project. It checks only the version number; no chats, text, accounts, identifiers, or passwords are sent. GitHub sees normal technical connection data, such as an IP address, as with any web request.</p>
+<p><b>Git setup:</b> In your Lantern folder, double-click <code>AKTUALISIEREN.cmd</code>. It verifies the official remote, main branch, and clean worktree before updating. Then reload Lantern on <code>chrome://extensions</code> and reload open chat pages.</p>
+<p><b>First-time Git setup:</b> Double-click <code>INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd</code>. It clones only the public official repository into Documents, opens the main guide and <code>chrome://extensions</code>, then you load <code>Documents\Lantern\lantern</code>. No GitHub account or password is needed. On a managed work device, IT may block Git installation; use the ZIP path or ask IT in that case.</p>
+<p><b>Why not fully automatic?</b> Chrome allows automatic extension updates only through the Chrome Web Store. A locally loaded extension must not replace itself.</p>
+</details>
+</main>
+</body>
+</html>

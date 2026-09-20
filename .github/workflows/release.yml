@@ -1,0 +1,55 @@
+name: Release Lantern
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged source
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check the release version
+        working-directory: lantern
+        env:
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: npm run release:check
+
+      - name: Verify Lantern
+        working-directory: lantern
+        run: npm run verify
+
+      - name: Audit usefulness routing
+        working-directory: lantern
+        run: npm run audit:usefulness
+
+      - name: Stage the user package
+        working-directory: lantern
+        run: npm run build
+
+      - name: Package the user archive
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          (cd lantern/dist/release && zip -r "../../../Lantern-$VERSION.zip" .)
+          sha256sum "Lantern-$VERSION.zip" > "Lantern-$VERSION.zip.sha256"
+
+      - name: Publish the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          gh release create "$GITHUB_REF_NAME" "Lantern-$VERSION.zip" "Lantern-$VERSION.zip.sha256" \
+            --title "Lantern $VERSION" --generate-notes

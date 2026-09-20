@@ -1,0 +1,89 @@
+MIT License
+
+Copyright (c) 2026 Lennart T. Köhne
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+===============================================================================
+  HAFTUNG UND GEWÄHRLEISTUNG (maßgeblich für Nutzer in Deutschland)
+===============================================================================
+
+Diese Software wird unentgeltlich überlassen. Es wird kein Entgelt verlangt,
+angenommen oder erwartet.
+
+1. Haftung
+
+   Für Schäden haftet der Urheber nur bei Vorsatz und grober Fahrlässigkeit
+   (§ 521 BGB).
+
+   Für einen Mangel im Recht oder einen Sachmangel haftet er nur, wenn er den
+   Mangel arglistig verschwiegen hat (§§ 523 Abs. 1, 524 Abs. 1 BGB).
+
+   Im Übrigen gelten die gesetzlichen Vorschriften. Zwingende gesetzliche
+   Haftung — insbesondere für Vorsatz (§ 276 Abs. 3 BGB), für die Verletzung
+   von Leben, Körper oder Gesundheit sowie nach dem Produkthaftungsgesetz —
+   bleibt unberührt.
+
+2. Keine Beschaffenheitsgarantie
+
+   Es wird keine Garantie für eine bestimmte Beschaffenheit, Eignung oder
+   Verfügbarkeit übernommen. Die Software ist ein Hilfsmittel beim Schreiben
+   von Prompts; sie prüft keine Inhalte und ersetzt keine fachliche, rechtliche
+   oder medizinische Beurteilung. Was mit ihrer Hilfe entsteht, verantwortet
+   die Person, die es verwendet.
+
+3. Bekannte Einschränkungen
+
+   Die bekannten Grenzen der Software sind in README.md und INSTALL.txt
+   beschrieben und werden dort offen benannt.
+
+4. Lokale Daten und optionale öffentliche Abfragen
+
+   Chats, Texte, Verlauf und Einstellungen bleiben im Browser der Nutzerin
+   oder des Nutzers. Bei der optionalen Versionsprüfung und bei einer
+   optional aktivierten Statusprüfung stellt der Browser eine öffentliche
+   HTTPS-Verbindung zu GitHub beziehungsweise einer Statusseite her. Diese
+   Dienste sehen dabei normale technische Verbindungsdaten wie bei jedem
+   Webseitenaufruf, zum Beispiel die IP-Adresse. Es werden keine Chat-Inhalte,
+   Zugangsdaten, Cookies, Kontodaten oder Lantern-spezifischen Kennungen an
+   den Urheber übermittelt. Ein Verantwortlicher im Sinne des Art. 4 Nr. 7
+   DSGVO wird durch die Weitergabe dieser Software nicht begründet.
+
+Hinweis zum Verhältnis der beiden Abschnitte: Der englische Text oben ist die
+Lizenz — er regelt, was mit der Software gemacht werden darf, und das ist sehr
+viel. Der deutsche Abschnitt regelt die Haftung nach deutschem Recht. Wo der
+englische Haftungsausschluss weiter geht, als deutsches Recht zulässt, gilt
+dieser deutsche Abschnitt.
+
+
+===============================================================================
+  MARKEN
+===============================================================================
+
+Lantern ist ein eigenständiges Werkzeug. Es gehört nicht zu OpenAI, Anthropic
+oder Google, wird von ihnen weder betrieben noch empfohlen und steht in keiner
+Verbindung zu ihnen. ChatGPT ist eine Marke von OpenAI, Claude eine Marke von
+Anthropic, Gemini eine Marke von Google. Diese Namen werden hier nur genannt,
+um zu beschreiben, mit welchen Diensten Lantern zusammenarbeitet.
+
+Lantern is an independent tool. It is not affiliated with, endorsed by, or
+sponsored by OpenAI, Anthropic or Google. ChatGPT is a trademark of OpenAI,
+Claude of Anthropic, Gemini of Google. Those names appear here only to say
+which services this software works with.

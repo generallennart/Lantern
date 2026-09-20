@@ -22,6 +22,20 @@ test('release staging ships the update scripts and bundled guide', () => {
   assert.equal(fs.existsSync(path.join(extensionRoot, 'GIT-UPDATE-ANLEITUNG.html')), true);
 });
 
+test('German install materials explicitly explain extracting the ZIP file', () => {
+  const mainGuide = read('ANLEITUNG.html');
+  const quickGuide = read('ZUERST-LESEN.txt');
+  const installGuide = read('lantern/INSTALL.txt');
+  const updateGuide = read('lantern/GIT-UPDATE-ANLEITUNG.html');
+
+  [mainGuide, quickGuide, installGuide, updateGuide].forEach(text => {
+    assert.match(text, /Alle extrahieren/);
+    assert.match(text, /Extrahieren/);
+  });
+  assert.match(mainGuide, /Komprimierter ZIP-Ordner/);
+  assert.match(installGuide, /nicht in der \.zip-Datei/);
+});
+
 test('the Windows updater fast-forwards only the official repository', () => {
   const installer = read('INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd');
   const updater = read('AKTUALISIEREN.cmd');

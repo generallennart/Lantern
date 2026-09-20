@@ -11,7 +11,7 @@ Wenn "git push" "No anonymous write access" meldet:
        https://git-scm.com/download/win.
 2. Lass bei der Installation "Git Credential Manager" eingeschaltet.
 3. Schliesse VS Code vollstaendig und oeffne es wieder.
-4. Oeffne im Ordner Lantern-1.0.0 ein Terminal und fuehre aus:
+4. Oeffne im Projektordner ein Terminal und fuehre aus:
                git push --set-upstream origin main --tags
 5. Der normale GitHub-Anmeldedialog oeffnet sich im Browser. Melde dich als
        generallennart an und kehre danach zum Terminal zurueck.

@@ -2,7 +2,19 @@
   LANTERN  -  ZUERST HIER LESEN
 ===============================================================================
 
-In diesem Ordner liegen fünf Dinge:
+ZUERST: DIE ZIP-DATEI ENTPACKEN
+
+Wenn du noch eine Datei mit der Endung .zip siehst:
+
+  1. Oeffne Downloads.
+  2. Rechtsklick auf die Lantern-ZIP-Datei.
+  3. Klicke auf "Alle extrahieren...".
+  4. Klicke im naechsten Fenster auf "Extrahieren".
+
+Windows oeffnet dann einen neuen normalen Ordner. Arbeite nur in diesem neuen
+Ordner weiter, nicht in der .zip-Datei. Du brauchst dafuer kein extra Programm.
+
+In diesem normalen Ordner liegen fuenf Dinge:
 
     ANLEITUNG.html     <-- Doppelklick darauf. Das ist die Anleitung.
   INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd
@@ -11,9 +23,9 @@ In diesem Ordner liegen fünf Dinge:
     OFFENE-FRAGEN.txt  <-- ein paar Fragen an dich. Spaeter, in Ruhe.
     lantern            <-- der Ordner mit dem Programm. Nicht anfassen.
 
-Die Anleitung oeffnet sich in deinem Browser und fuehrt dich in sieben
+Die Anleitung oeffnet sich in deinem Browser und fuehrt dich in acht
 Schritten durch. Du brauchst keine Vorkenntnisse und es dauert etwa
-zwei Minuten.
+drei Minuten.
 
 Falls sich ANLEITUNG.html nicht oeffnet: Rechtsklick darauf ->
 "Oeffnen mit" -> Google Chrome.

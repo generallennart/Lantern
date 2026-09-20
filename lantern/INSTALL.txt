@@ -1,6 +1,6 @@
 ===============================================================================
   LANTERN  -  Prompt-Helfer fuer ChatGPT, Claude und Gemini
-    Version 1.0.0
+    Version 1.0.1
 ===============================================================================
 
 Lantern ist eine Erweiterung fuer Chrome. Sie erscheint auf chatgpt.com,
@@ -19,8 +19,16 @@ Die Installation dauert etwa eine Minute. Du brauchst keine Vorkenntnisse.
   SCHRITT 1  -  Ordner an einen festen Platz legen
 -------------------------------------------------------------------------------
 
-Entpacke die ZIP-Datei, falls noch nicht geschehen. Du hast dann einen Ordner
-mit dem Namen "lantern".
+Wenn du noch eine Datei mit der Endung .zip siehst, ist sie noch nicht
+entpackt. Windows kann das selbst:
+
+    1. Oeffne Downloads.
+    2. Rechtsklick auf die Lantern-ZIP-Datei.
+    3. Klicke auf "Alle extrahieren...".
+    4. Klicke im naechsten Fenster auf "Extrahieren" und warte kurz.
+
+Windows oeffnet danach einen neuen normalen Ordner. Arbeite nur in diesem
+neuen Ordner weiter, nicht in der .zip-Datei. Du brauchst kein extra Programm.
 
 WICHTIG: Lege diesen Ordner an einen Platz, an dem er dauerhaft bleiben kann,
 zum Beispiel:
@@ -393,18 +401,22 @@ kann sie also auch nicht lesen.
   ENGLISH  -  SHORT VERSION
 ===============================================================================
 
-1. Unzip and move the "lantern" folder somewhere permanent
-   (NOT your Downloads folder - Chrome loads it from disk on every start).
+1. If the download still ends in .zip: right-click it in Downloads, choose
+    "Extract All", then click "Extract". Work from the new normal folder,
+    not from the ZIP file.
 
-2. In Chrome, open:   chrome://extensions
+2. Move the "lantern" folder somewhere permanent (NOT your Downloads folder -
+    Chrome loads it from disk on every start).
+
+3. In Chrome, open:   chrome://extensions
    (Microsoft Edge:   edge://extensions )
 
-3. Turn ON "Developer mode" - the switch in the top right corner.
+4. Turn ON "Developer mode" - the switch in the top right corner.
 
-4. Click "Load unpacked" (top left) and select the "lantern" folder -
+5. Click "Load unpacked" (top left) and select the "lantern" folder -
    the one that contains manifest.json directly.
 
-5. Open https://chatgpt.com , https://claude.ai or https://gemini.google.com
+6. Open https://chatgpt.com , https://claude.ai or https://gemini.google.com
    and reload the page. A narrow "Lantern" tab appears on the right-hand edge;
    click it, or press Ctrl+Shift+K.
 

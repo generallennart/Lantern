@@ -30,7 +30,7 @@ ZIP-Weg oder die IT-Abteilung der sichere Weg.
 
 Danach aktualisiert `AKTUALISIEREN.cmd` nur aus
 `https://github.com/generallennart/Lantern.git`. Es prüft zuerst die genaue
-Adresse, den Hauptzweig und ob eigene Änderungen vorhanden sind. Erst dann
+Adresse, den freigegebenen Hauptzweig und ob eigene Änderungen vorhanden sind. Erst dann
 läuft `git pull --ff-only origin main`; eigene Änderungen werden nicht
 überschrieben.
 
@@ -58,7 +58,8 @@ Mehr Details: [Anleitung](ANLEITUNG.html),
 
 Für Maintainer: [VEROEFFENTLICHEN.txt](VEROEFFENTLICHEN.txt). Ein `vX.Y.Z`-Tag
 startet GitHub Actions: prüfen, auditieren, paketieren, hashen und als GitHub
-Release veröffentlichen.
+Release veröffentlichen. `main` ist nur für freigegebene Fassungen; laufende
+Arbeit gehört auf den Branch `develop`.
 
 ## Lizenz
 

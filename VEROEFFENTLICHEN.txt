@@ -19,7 +19,16 @@ Wenn "git push" "No anonymous write access" meldet:
 Nie ein Passwort oder einen Token in diese Datei, in das Projekt oder in einen
 Chat kopieren. Die Anmeldung passiert nur im normalen GitHub-Dialog.
 
-1. Im Ordner lantern die Versionsnummer aendern. Danach prueft der naechste
+BRANCHEN
+
+- main ist der freigegebene Update-Zweig. Die Nutzer-Datei AKTUALISIEREN.cmd
+       zieht nur von dort.
+- develop ist der Arbeitszweig. Neue Funktionen, Tests und Texte zuerst dort
+       aendern und testen.
+- Erst wenn eine Fassung fertig ist, develop nach main zusammenfuehren, dann
+       die folgenden Schritte ausfuehren und den Tag auf main setzen.
+
+1. Auf develop die Versionsnummer aendern. Danach prueft der naechste
    Schritt automatisch manifest.json, package.json, src\rules.js, INSTALL.txt,
    README.md und den Review-Brief auf dieselbe Version.
 
@@ -29,7 +38,10 @@ Chat kopieren. Die Anmeldung passiert nur im normalen GitHub-Dialog.
        npm run audit:usefulness
        npm run build
 
-3. Im Projektordner pruefen, was sich aendert:
+3. In main wechseln und develop zusammenfuehren. Danach im Projektordner
+   pruefen, was sich aendert:
+       git switch main
+       git merge develop
        git status
 
 4. Alles, was zur Version gehoert, speichern:
@@ -53,9 +65,15 @@ SICHERHEIT
   Lantern als Update.
 
 ENGLISH
-1. Update the version. The next command checks every visible version reference.
+BRANCHES
+
+- main is the released update branch. User updater scripts pull only from it.
+- develop is the working branch. Make and test changes there first.
+- Merge develop into main only when a release is ready, then tag main.
+
+1. On develop, update the version. The next command checks every visible version reference.
 2. Run npm run release:check, npm run verify, npm run audit:usefulness, and npm run build.
-3. Review git status.
+3. Switch to main, merge develop, then review git status.
 4. Run git add ., then git commit -m "Release vX.Y.Z".
 5. Run git tag vX.Y.Z and git push origin main --tags.
 6. Wait for the GitHub Action to publish the ZIP release. Lantern accepts only

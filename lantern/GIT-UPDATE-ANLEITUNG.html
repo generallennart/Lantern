@@ -37,7 +37,7 @@ small { color:var(--soft); }
 <li>Wenn Chrome aufgeht, suche Lantern auf <code>chrome://extensions</code> und klicke auf den Kreis-Pfeil zum <b>Neu laden</b>.</li>
 <li>Lade offene ChatGPT-, Claude- oder Gemini-Seiten einmal mit <code>F5</code> neu.</li>
 </ol>
-<p><small>Das Skript prüft zuerst die genaue offizielle Adresse <code>https://github.com/generallennart/Lantern.git</code>, den Hauptzweig und eigene Änderungen. Erst dann verwendet es <code>git pull --ff-only</code>. Eigene Änderungen werden nicht zusammengeführt oder überschrieben.</small></p>
+<p><small>Das Skript prüft zuerst die genaue offizielle Adresse <code>https://github.com/generallennart/Lantern.git</code>, den freigegebenen Hauptzweig und eigene Änderungen. Erst dann verwendet es <code>git pull --ff-only</code>. Eigene Änderungen werden nicht zusammengeführt oder überschrieben.</small></p>
 </section>
 
 <section class="card">
@@ -69,7 +69,7 @@ sein; dann bleib beim ZIP-Weg oder frage die IT.</p>
 <details>
 <summary>English</summary>
 <p>This page appears only because Lantern found a newer public version in its official GitHub project. It checks only the version number; no chats, text, accounts, identifiers, or passwords are sent. GitHub sees normal technical connection data, such as an IP address, as with any web request.</p>
-<p><b>Git setup:</b> In your Lantern folder, double-click <code>AKTUALISIEREN.cmd</code>. It verifies the official remote, main branch, and clean worktree before updating. Then reload Lantern on <code>chrome://extensions</code> and reload open chat pages.</p>
+<p><b>Git setup:</b> In your Lantern folder, double-click <code>AKTUALISIEREN.cmd</code>. It verifies the official remote, released main branch, and clean worktree before updating. Then reload Lantern on <code>chrome://extensions</code> and reload open chat pages.</p>
 <p><b>First-time Git setup:</b> Double-click <code>INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd</code>. It clones only the public official repository into Documents, opens the main guide and <code>chrome://extensions</code>, then you load <code>Documents\Lantern\lantern</code>. No GitHub account or password is needed. On a managed work device, IT may block Git installation; use the ZIP path or ask IT in that case.</p>
 <p><b>Why not fully automatic?</b> Chrome allows automatic extension updates only through the Chrome Web Store. A locally loaded extension must not replace itself.</p>
 </details>

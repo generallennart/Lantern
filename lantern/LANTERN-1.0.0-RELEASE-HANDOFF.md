@@ -45,6 +45,10 @@ Local release state:
 - Local tag: `v1.0.0`
 - Local Git identity: `generallennart@users.noreply.github.com`
 
+`main` is the released update branch consumed by user update scripts. Ongoing
+work belongs on `develop`; merge it into `main` only when a version is ready to
+verify, tag, and release.
+
 `.github/workflows/release.yml` runs verification, usefulness audit, staging,
 ZIP creation, SHA-256 generation, and GitHub Release publishing when a
 maintainer pushes a `vX.Y.Z` tag.

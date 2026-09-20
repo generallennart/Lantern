@@ -25,7 +25,13 @@ The published user archive is `Lantern-1.0.1.zip`. It must contain 26 user
 files: five root guide files and 21 extension files. It excludes Git metadata,
 tests, tools, package metadata, build scripts, review briefs, and handoffs.
 
-Final archive SHA-256: `cde87628c72559742bc258fd38457798aba4683955273696bcc68af6c032a4f6`.
+Local sender archive SHA-256: `cde87628c72559742bc258fd38457798aba4683955273696bcc68af6c032a4f6`.
+
+Published GitHub Release asset SHA-256:
+`052ea282263521fe16c05becef8f2ffe280dfedd1132282f14abc979d403e466`.
+GitHub Actions checks out text with LF line endings, so the ZIP byte hashes can
+differ from the local Windows archive; unpacked user files are semantically
+identical after normalizing line endings.
 
 ## Validation Required
 
@@ -53,3 +59,6 @@ a release notice.
 - `Lantern-1.0.1.zip`: extracted paths and SHA-256 values match staging
 	exactly; update scripts and guide are present and all development artifacts
 	are absent.
+- GitHub Actions completed successfully and published stable `v1.0.1` with its
+	ZIP and SHA-256 asset. The public asset checksum matched its published file,
+	had 26 user files, and passed every explicit ZIP-extraction guide check.

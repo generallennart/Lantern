@@ -10,7 +10,13 @@ Windows update helpers, and the loadable `lantern/` extension folder. It does
 not contain tests, tools, package metadata, build scripts, Git metadata, the
 workflow, or maintainer material.
 
-Final archive SHA-256: `C8AFCF19B600CF3AAA0E7F1F8C31C68B5B98AB1A4FAA65CA55F0FC7731577BCE`.
+Local sender archive SHA-256: `C8AFCF19B600CF3AAA0E7F1F8C31C68B5B98AB1A4FAA65CA55F0FC7731577BCE`.
+
+Published GitHub Release asset SHA-256:
+`018d7c3c9582190dde675c8269fdd3a93365ff27ab1d221605fc0ae33c15cafe`.
+GitHub Actions checks out text with LF line endings, so the two ZIP byte hashes
+differ; their unpacked user files are semantically identical after normalizing
+line endings.
 
 ## Update Path
 
@@ -43,10 +49,11 @@ Local release state:
 ZIP creation, SHA-256 generation, and GitHub Release publishing when a
 maintainer pushes a `vX.Y.Z` tag.
 
-The remote repository was empty when this release was prepared. The first push
-is pending a one-time interactive GitHub sign-in on this machine. Follow
-`VEROEFFENTLICHEN.txt`; do not put a password, personal access token, cookie, or
-secret in this repository or a chat.
+The initial `main` branch and `v1.0.0` tag were pushed successfully. GitHub
+Actions run `35504111252` completed successfully and published the stable
+`v1.0.0` Release with its ZIP and SHA-256 asset. Follow
+`VEROEFFENTLICHEN.txt` for future tags; do not put a password, personal access
+token, cookie, or secret in this repository or a chat.
 
 ## Validation Completed
 
@@ -60,3 +67,6 @@ secret in this repository or a chat.
 - The update checker, opt-out, cache schema, pinned URL, credentials omission,
   redirect rejection, release-tag validation, Git updater preconditions, and
   release workflow all have focused regression coverage.
+- The published GitHub asset checksum matched its `.sha256` file, contained 26
+  user files, had the expected update scripts and guide, and excluded all
+  development and maintainer artifacts.

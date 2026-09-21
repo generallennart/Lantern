@@ -302,7 +302,10 @@
 
     lnUpdate: function (u) {
       if (!isObj(u) || num(u.checkedAt) === undefined) return undefined;
-      return pick({ checkedAt: u.checkedAt }, u, { version: releaseVersion });
+      var version = releaseVersion(u.version);
+      return u.verified === true && version
+        ? { checkedAt: u.checkedAt, verified: true, version: version }
+        : { checkedAt: u.checkedAt };
     }
   };
 

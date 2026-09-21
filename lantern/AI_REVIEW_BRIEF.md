@@ -1,4 +1,4 @@
-# Lantern 1.0.1 Independent Review Brief
+# Lantern 1.1.0 Independent Review Brief
 
 ## Scope
 
@@ -29,19 +29,24 @@ them into a report.
 - A custom follow-up focuses the provider's real composer instead of relaying
   text through a second Lantern input. Prior task context is never repeated
   automatically; repeating it is a separate explicit command.
-- Handover requests keep each detail under one heading, and a fresh chat does
-  not recap the handover before it continues unless an essential detail is
-  missing. Move chat carries an explicit auto-insert marker into the fresh tab;
-  it fills the real composer but never submits, and falls back to a manual
-  Insert control if the composer is unavailable.
+- Handover requests produce only an ordered verb-led task list, not separate
+  context categories. A fresh chat does not recap the list before continuing
+  unless an essential detail is missing. Move chat carries an explicit
+  auto-insert marker into the fresh tab; it fills the real composer but never
+  submits, and falls back to a manual Insert control if the composer is
+  unavailable.
 - Clear all removes every request-local control while retaining language,
   appearance, history, and handover state. The short five-tab tour is available
   again from Settings.
 - Dragging and resizing capture their active pointer and end on normal release,
   cancellation, or lost capture; panel events still do not leak to host chats.
 - The daily update check reads only pinned public GitHub release metadata,
-  omits credentials, rejects redirects, stores only a timestamp/version, and
-  never downloads, renders, or executes release content.
+  omits credentials, rejects redirects, stores only a timestamp, verified flag,
+  and version. It never downloads, renders, or executes release content. It requires the exact
+  stable release ZIP and checksum assets before displaying an update.
+- Voice typing is documented as the operating system's explicit `Win+H`
+  dictation shortcut. Lantern requests no microphone permission, records no
+  audio, and contains no browser speech-recognition implementation.
 - ChatGPT model labels use neutral prompt framing. Do not infer relative cost,
   speed, or quality from Astra, Astrum, Sol, Terra, or Luna labels.
 - Clear requests, strict output contracts, external actions, and missing source

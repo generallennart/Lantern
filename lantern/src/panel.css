@@ -510,6 +510,9 @@ details.ln-det[open] > summary::before { transform: rotate(90deg); }
  * reader. Someone navigating by keyboard tabbed through ten inputs that were
  * not on screen. */
 details.ln-det:not([open]) > .ln-det-inner { display: none; }
+.ln-voice-dictation { margin-top: 8px; }
+.ln-voice-dictation .ln-det-inner { padding-top: 8px; }
+.ln-voice-safety { margin: 8px 0 0; font-size: calc(var(--ln-fs) * 0.7857); color: var(--fg-soft); }
 
 .ln-toggles { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
 .ln-chk {

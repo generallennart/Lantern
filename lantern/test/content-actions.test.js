@@ -119,6 +119,11 @@ test('clear all is available before a prompt result exists', () => {
   assert.ok(clearAt > promptStart && clearAt < resultStart);
 });
 
+test('move chat has no category controls around its action-only task list', () => {
+  assert.doesNotMatch(contentSource, /ln-mv-parts|mvParts|data-t="mvCarry"/);
+  assert.match(contentSource, /buildHandoverRequest\(\{ lang: state\.lang \}\)/);
+});
+
 test('panel text events stop at Lantern instead of reaching a host chat handler', () => {
   const listeners = {};
   const containPanelEvents = panelEventShield();
@@ -782,8 +787,7 @@ test('storage reset clears an open panel back to its default in-memory state', (
     carry: 'private carry',
     capturing: true,
     mvWaiting: Date.now(),
-    mvBefore: 'old answer',
-    mvParts: ['all']
+    mvBefore: 'old answer'
   };
   const els = {
     text: { value: 'old request' },

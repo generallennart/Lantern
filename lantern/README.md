@@ -4,7 +4,7 @@ A Chrome extension that sits on chatgpt.com, claude.ai and gemini.google.com. Th
 plain words; Lantern reads what they wrote, turns it into a structured prompt,
 shows what is still missing, and helps them push back on the answer.
 
-**v1.0.1.** For installation see `INSTALL.txt` — written for someone who has
+**v1.1.0.** For installation see `INSTALL.txt` — written for someone who has
 never installed an unpacked extension. This file is the developer's view.
 
 **Licence: MIT** (`LICENSE`). Anyone may use it — at work, commercially,
@@ -346,24 +346,32 @@ carries one button instead — answering them outranks everything else on offer.
 
 ## Moving a chat
 
-Long chats get slow and lose the thread, so people start a new one and silently
-lose every fact, decision and dead end they had established. Three steps in the
+Long chats get slow and lose the next useful action. Three steps in the
 **Umziehen / Move chat** tab:
 
 1. **Ask for a handover** — inserts a prompt into the current chat requesting
-  a goal, exact binding facts, optional decisions and dead ends, optional style,
-  and one combined next-step/open-questions section as one code block. Each
-  detail belongs under one heading only. It forbids inventing and requires
-  "unknown" for gaps.
+  one short, ordered task list. Each point starts with a verb and describes
+  one next action. Numbers, names, quotes, or constraints appear only beside
+  the task that needs them. It has no separate goal, facts, decisions, style,
+  or summary sections.
 2. **Collect it** — lifts the code block into the panel, where it can still be
    edited.
 3. **Start the new chat** — opens a real (not temporary) chat and puts the
-  handover *plus Lantern's own framing* into its composer. It never sends it;
-  the user checks it and presses send. The handover outranks saved memory, the
+  task list *plus Lantern's own framing* into its composer. It never sends it;
+  the user checks it and presses send. The task list outranks saved memory, the
   new chat does not repeat it, and it asks one short question only when an
   essential detail is incomplete or contradictory. If a provider has not made
   its composer available within three seconds, Lantern falls back to its visible
   manual Insert control.
+
+## Voice typing without Lantern microphone access
+
+Lantern deliberately does not implement browser speech recognition or request
+microphone access. Browser recognition can use a server, while private
+on-device language packs are not reliably available on every browser and
+device. Instead, use Windows Dictation in whichever text field is focused:
+click the field, press `Win+H`, and dictate. Windows decides whether the
+microphone is active; Lantern records and transmits no audio.
 
 The panel also says how many messages the chat has and flags when it is time.
 

@@ -14,9 +14,10 @@ Wenn du noch eine Datei mit der Endung .zip siehst:
 Windows oeffnet dann einen neuen normalen Ordner. Arbeite nur in diesem neuen
 Ordner weiter, nicht in der .zip-Datei. Du brauchst dafuer kein extra Programm.
 
-In diesem normalen Ordner liegen fuenf Dinge:
+In diesem normalen Ordner liegen sechs Dinge:
 
     ANLEITUNG.html     <-- Doppelklick darauf. Das ist die Anleitung.
+  AENDERUNGEN.txt    <-- Was sich in den echten Versionen geaendert hat.
   INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd
              <-- Optional: einmal doppelklicken fuer einfache Updates.
   AKTUALISIEREN.cmd  <-- Spaeter zum Aktualisieren doppelklicken.
@@ -33,6 +34,10 @@ Falls sich ANLEITUNG.html nicht oeffnet: Rechtsklick darauf ->
 Wenn du Updates spaeter moeglichst einfach haben willst: Doppelklick auf
 INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd. Die Datei erklaert jeden Schritt,
 braucht kein GitHub-Konto und fragt nie nach einem Passwort.
+
+Mit Stimme schreiben: Klicke in ein Texteingabefeld und druecke Win+H.
+Windows schreibt dann Gesprochenes in dieses Feld. Lantern selbst schaltet
+kein Mikrofon ein und nimmt keinen Ton auf.
 
 Ganz kurz, falls du es eilig hast:
 

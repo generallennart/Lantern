@@ -1,6 +1,6 @@
 ===============================================================================
   LANTERN  -  Prompt-Helfer fuer ChatGPT, Claude und Gemini
-    Version 1.0.1
+    Version 1.1.0
 ===============================================================================
 
 Lantern ist eine Erweiterung fuer Chrome. Sie erscheint auf chatgpt.com,
@@ -108,6 +108,22 @@ ist voellig in Ordnung. Zum Beispiel:
 
 Klicke dann auf "Prompt bauen". Lantern macht daraus einen fertigen Prompt und
 "In den Chat einfuegen" setzt ihn direkt in das Eingabefeld des Assistenten.
+
+
+-------------------------------------------------------------------------------
+    MIT STIMME SCHREIBEN
+-------------------------------------------------------------------------------
+
+Du kannst die Windows-Diktierung in jedem normalen Texteingabefeld nutzen:
+
+        1. Klicke in das Feld, in das du sprechen willst.
+        2. Druecke gleichzeitig Win + H.
+        3. Sprich. Windows schreibt die Worte in genau dieses Feld.
+
+Das funktioniert im grossen Feld, in Details und in der Uebergabe. Lantern
+fordert kein Mikrofon an, nimmt keinen Ton auf und nutzt keine Browser-
+Spracherkennung. Ob Mikrofon oder Diktierung aktiv ist, entscheidest du allein
+in Windows.
 
 
 -------------------------------------------------------------------------------
@@ -319,6 +335,12 @@ Nach dem Schaerfen.
     Abschicken. Lantern oeffnet kein neues Fenster und schickt nichts selbst.
     Nach deiner Nachricht holt es den geschaerften Prompt aus dem Codeblock
     der Antwort wieder ins Lantern-Fenster.
+
+Chat umziehen.
+    Bei langen Chats schreibt Lantern jetzt keine lange Zusammenfassung mehr,
+    sondern eine kurze Aufgabenliste: ein konkreter naechster Schritt pro
+    Punkt, in der richtigen Reihenfolge. Die Liste liegt im neuen Chatfeld
+    bereit; pruefen und abschicken tust du selbst.
 
 
 Lantern im Chat.

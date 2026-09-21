@@ -63,6 +63,7 @@ const FETCH_TIMEOUT = 8000;
 const MAX_BYTES = 1024 * 1024;   // a rules file is ~80 KB; 1 MB is generous
 const UPDATE_API = 'https://api.github.com/repos/generallennart/Lantern/releases/latest';
 const UPDATE_RELEASE_PREFIX = 'https://github.com/generallennart/Lantern/releases/tag/';
+const UPDATE_DOWNLOAD_PREFIX = 'https://github.com/generallennart/Lantern/releases/download/';
 const UPDATE_TTL = 24 * 60 * 60 * 1000;
 const UPDATE_MAX_BYTES = 64 * 1024;
 const UPDATE_ALARM = 'ln-update-check';
@@ -130,10 +131,26 @@ function versionFromReleaseTag(tag) {
   return match && validExtensionVersion(match[1]);
 }
 
+function hasOfficialReleaseAssets(release, version) {
+  if (!Array.isArray(release && release.assets)) return false;
+  const tag = 'v' + version;
+  const base = UPDATE_DOWNLOAD_PREFIX + tag + '/';
+  const wanted = [
+    'Lantern-' + version + '.zip',
+    'Lantern-' + version + '.zip.sha256'
+  ];
+  return wanted.every(name => release.assets.some(asset =>
+    asset && typeof asset === 'object' && asset.name === name &&
+    typeof asset.size === 'number' && asset.size > 0 &&
+    asset.browser_download_url === base + name
+  ));
+}
+
 function cachedUpdate(raw) {
   if (!raw || typeof raw !== 'object' || typeof raw.checkedAt !== 'number' || !isFinite(raw.checkedAt)) return null;
-  const version = raw.version ? validExtensionVersion(raw.version) : null;
-  return { checkedAt: raw.checkedAt, version: version || '' };
+  const verified = raw.verified === true;
+  const version = verified && raw.version ? validExtensionVersion(raw.version) : null;
+  return { checkedAt: raw.checkedAt, verified: !!version, version: version || '' };
 }
 
 function updateResult(enabled, cached) {
@@ -196,7 +213,8 @@ async function fetchLatestRelease() {
   let data;
   try { data = JSON.parse(body.text); } catch (e) { return null; }
   if (!data || typeof data !== 'object' || data.draft === true || data.prerelease === true) return null;
-  return versionFromReleaseTag(data.tag_name);
+  const version = versionFromReleaseTag(data.tag_name);
+  return version && hasOfficialReleaseAssets(data, version) ? version : null;
 }
 
 async function checkForUpdate(force) {
@@ -216,13 +234,14 @@ async function checkForUpdate(force) {
 
   const version = await fetchLatestRelease();
   if (!version) {
-    const fallback = updateResult(true, cached);
-    if (!cached) await rememberUpdate({ checkedAt: Date.now() });
-    paintUpdateBadge(fallback);
-    return fallback;
+    const unavailable = { checkedAt: Date.now(), verified: false };
+    await rememberUpdate(unavailable);
+    const result = updateResult(true, unavailable);
+    paintUpdateBadge(result);
+    return result;
   }
 
-  const next = { checkedAt: Date.now(), version: version };
+  const next = { checkedAt: Date.now(), verified: true, version: version };
   await rememberUpdate(next);
   const result = updateResult(true, next);
   paintUpdateBadge(result);

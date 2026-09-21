@@ -1,0 +1,52 @@
+===============================================================================
+  LANTERN - AENDERUNGEN
+===============================================================================
+
+Diese Datei sagt kurz, was sich pro echter Version geaendert hat.
+Aeltere X.X.X-Fassungen vor 1.0 waren Testfassungen.
+
+
+-------------------------------------------------------------------------------
+  1.1.0 - Stimme, sichere Updates und klare Uebergaben
+-------------------------------------------------------------------------------
+
+- Spracheingabe: In jedem normalen Texteingabefeld kannst du die Windows-
+  Diktierung verwenden. Erst das Feld anklicken, dann Win+H druecken und
+  sprechen. Das funktioniert im grossen Feld, in Details und in der Uebergabe.
+
+- Sicherheit der Spracheingabe: Lantern fordert kein Mikrofon an, nimmt keinen
+  Ton auf und nutzt keine Browser-Spracherkennung. Ob Diktierung oder Mikrofon
+  aktiv ist, entscheidest du ausschliesslich in Windows.
+
+- Aktualisierungen: Ein ! erscheint nur bei einer wirklich neueren stabilen
+  GitHub-Version, wenn dort sowohl die passende ZIP-Datei als auch ihre
+  Checksum-Datei vorhanden sind. Ein alter oder fehlgeschlagener Check zeigt
+  keine veraltete Warnung weiter an.
+
+- Chat umziehen: Die Uebergabe ist jetzt nur noch eine kurze Aufgabenliste:
+  konkrete naechste Schritte in der richtigen Reihenfolge. Keine getrennten
+  Zusammenfassungen von Ziel, Fakten, Entscheidungen oder Stil mehr.
+
+
+-------------------------------------------------------------------------------
+  1.0.1 - Erstinstallation klarer gemacht
+-------------------------------------------------------------------------------
+
+- Die Anleitung erklaert jetzt Schritt fuer Schritt, wie du eine ZIP-Datei mit
+  Windows entpackst: Rechtsklick, "Alle extrahieren...", "Extrahieren".
+- Sie erklaert auch, dass du danach im neuen normalen Ordner weiterarbeitest,
+  nicht in der .zip-Datei.
+
+
+-------------------------------------------------------------------------------
+  1.0.0 - Erste echte Veroeffentlichung
+-------------------------------------------------------------------------------
+
+- Erste stabile Lantern-Version nach den Testfassungen.
+- GitHub-Repository und automatischer Release-Ablauf eingerichtet.
+- Lantern kann auf eine neue offizielle stabile Version hinweisen, ohne Chats,
+  Texte oder Zugangsdaten zu uebertragen.
+- Einfache Update-Anleitung mit ZIP-Weg und optionalem sicheren Git-Weg.
+- Bestehende Sicherheitsgrenzen bleiben: Lantern drueckt nie selbst auf Senden.
+
+===============================================================================

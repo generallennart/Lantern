@@ -8,7 +8,7 @@
  */
 
 window.LN_RULES = {
-  version: '1.0.1',
+  version: '1.1.0',
   updated: '2026-09-20',
 
   /* Section headings used when assembling the prompt. */
@@ -1476,8 +1476,8 @@ Rules:
     longMessages: 40,
 
     note: {
-      de: 'Lange Chats gehen nicht ab einer bestimmten Länge kaputt. Gemessen wurde etwas anderes: Je länger ein Gespräch läuft, desto häufiger gibt ein Modell eine richtige Antwort auf, wenn man widerspricht – in den Aufzeichnungen behält es die richtige Antwort intern und gibt sie trotzdem auf. Ein Umzug, bei dem nur die Fakten mitkommen, nimmt diesen Druck heraus.',
-      en: 'Long chats do not break at a particular length. What has been measured is something else: the longer a conversation runs, the more often a model gives up a correct answer when you push back — in the transcripts it keeps the right answer internally and concedes anyway. Moving the task across with only the facts takes that pressure off.'
+      de: 'Lange Chats gehen nicht ab einer bestimmten Länge kaputt. Gemessen wurde etwas anderes: Je länger ein Gespräch läuft, desto häufiger gibt ein Modell eine richtige Antwort auf, wenn man widerspricht – in den Aufzeichnungen behält es die richtige Antwort intern und gibt sie trotzdem auf. Ein Umzug mit einer kurzen klaren Aufgabenliste nimmt diesen Druck heraus.',
+      en: 'Long chats do not break at a particular length. What has been measured is something else: the longer a conversation runs, the more often a model gives up a correct answer when you push back — in the transcripts it keeps the right answer internally and concedes anyway. Moving the task across with a short clear task list takes that pressure off.'
     },
 
     pressure: {
@@ -1495,12 +1495,11 @@ Rules:
   },
 
   /* -------------------------------------------------------------------------
-   * HANDOVER — moving a task into a fresh chat without losing the thread.
-   *
-   * Long chats get slow and confused, so people start a new one and silently
-   * lose every fact, decision and dead end they had established. Experienced
-   * users write themselves a handover; beginners do not know that is a thing
-   * you can ask for.
+  * HANDOVER — moving a task into a fresh chat without losing the thread.
+  *
+  * Long chats get slow and confused, so people start a new one and lose track
+  * of the next useful action. The handover stays deliberately narrow: a new
+  * chat needs an ordered task list, not another summary of the old one.
    *
    * Two prompts. The first makes the current chat write the handover. The
    * second is what Lantern puts around it in the new chat — and that framing
@@ -1509,80 +1508,70 @@ Rules:
   * asks a question only when the next step cannot safely begin.
    * --------------------------------------------------------------------- */
   handover: {
-    // The parts the user can choose to carry over. `always` ones are not
-    // optional: a handover without facts or a next step is not a handover.
     parts: [
-      { id: 'goal', always: true,
-        de: 'Ziel: gewünschtes Ergebnis und nicht verhandelbare Rahmenbedingungen, knapp',
-        en: 'Goal: desired result and non-negotiable boundaries, briefly' },
-      { id: 'facts', always: true,
-        de: 'Fakten: nur verbindliche Zahlen, Namen, Termine, Zitate und Angaben aus diesem Chat – exakt',
-        en: 'Facts: only binding figures, names, dates, quotes, and details from this chat — exactly' },
-      { id: 'decisions', label: { de: 'Entscheidungen & verworfene Wege', en: 'Decisions & dead ends' },
-        de: 'Entscheidungen & verworfene Wege: nur was für den nächsten Schritt noch wichtig ist, jeweils mit Grund',
-        en: 'Decisions & dead ends: only what still matters for the next step, with the reason' },
-      { id: 'style', label: { de: 'Stil & Format', en: 'Style & format' },
-        de: 'Stil & Format: nur feste Vorgaben, die nicht schon bei Ziel oder Fakten stehen',
-        en: 'Style & format: only fixed requirements not already stated under goal or facts' },
-      { id: 'next', always: true,
-        de: 'Nächster Schritt & offen: was als Nächstes getan wird und was dafür noch geklärt werden muss',
-        en: 'Next step & open: what happens next and what still needs deciding for it' }
+      { id: 'tasks', always: true,
+        de: 'Aufgabenliste: nur konkrete nächste Schritte in der richtigen Reihenfolge',
+        en: 'Task list: only concrete next steps in the right order' }
     ],
 
     request: {
       de: {
-        head: 'Wir wechseln in einen neuen Chat. Schreibe mir eine Übergabe, mit der jemand ohne diesen Chatverlauf sofort weiterarbeiten kann.',
-        listHead: 'Nimm auf:',
+        head: 'Wir wechseln in einen neuen Chat. Schreibe eine kurze Aufgabenliste, mit der direkt weitergearbeitet werden kann.',
+        listHead: 'Schreibe nur:',
         rules: [
-          'Jede Information nur einmal unter der ersten passenden Überschrift. Wiederhole nichts in einem zweiten Abschnitt.',
-          'Erfinde nichts dazu. Was du nicht weißt, schreibe ausdrücklich als „unbekannt“.',
-          'Fasse Zahlen, Namen und Zitate nicht zusammen — übernimm sie exakt.',
+          'Jeder Punkt beginnt mit einem Verb und beschreibt genau eine konkrete nächste Handlung.',
+          'Nenne eine Zahl, einen Namen, ein Zitat oder eine Vorgabe nur direkt bei der Aufgabe, die sie braucht.',
+          'Keine getrennten Abschnitte für Ziel, Fakten, Entscheidungen, Stil oder Zusammenfassung.',
+          'Fehlt vor einer Aufgabe etwas Wesentliches, schreibe stattdessen eine Aufgabe wie „Kläre: …“.',
+          'Erfinde nichts dazu.',
           'Keine Einleitung, keine Höflichkeitsfloskeln.',
-          'Gib die Übergabe als EINEN Codeblock aus, damit ich sie am Stück kopieren kann.'
+          'Gib die Aufgabenliste als EINEN Codeblock aus, damit ich sie am Stück kopieren kann.'
         ],
         rulesHead: 'Regeln:'
       },
       en: {
-        head: 'We are moving to a new chat. Write me a handover that lets someone without this chat history carry straight on.',
-        listHead: 'Include:',
+        head: 'We are moving to a new chat. Write a short task list that lets the work continue immediately.',
+        listHead: 'Write only:',
         rules: [
-          'Put each piece of information under the first matching heading only. Do not repeat it in another section.',
-          'Add nothing. Anything you do not know, write explicitly as "unknown".',
-          'Do not summarise figures, names or quotes — reproduce them exactly.',
+          'Start every point with a verb and describe exactly one concrete next action.',
+          'Put a figure, name, quote, or requirement only next to the task that needs it.',
+          'No separate sections for goal, facts, decisions, style, or summary.',
+          'If something essential is missing before a task can start, write a task such as "Clarify: ..." instead.',
+          'Add nothing.',
           'No preamble, no pleasantries.',
-          'Output the handover as ONE code block so I can copy it in one piece.'
+          'Output the task list as ONE code block so I can copy it in one piece.'
         ],
         rulesHead: 'Rules:'
       }
     },
 
-    /* What Lantern adds around the handover in the new chat. */
+    /* What Lantern adds around the task list in the new chat. */
     launch: {
       de: {
-        head: 'Das ist die Fortsetzung einer Arbeit aus einem anderen Chat. Die Übergabe steht unten.',
+        head: 'Das ist die Fortsetzung einer Arbeit aus einem anderen Chat. Die Aufgabenliste steht unten.',
         rulesHead: 'So gehst du damit um:',
         rules: [
-          'Die Übergabe ist maßgeblich. Wenn etwas in deinem gespeicherten Gedächtnis dazu im Widerspruch steht, gilt die Übergabe.',
-          'Wiederhole, fasse oder bestätige die Übergabe nicht noch einmal.',
-          'Fehlt für den nächsten Schritt eine wesentliche Angabe oder ist sie widersprüchlich oder unklar, stelle genau eine kurze Rückfrage. Sonst beginne sofort mit dem nächsten Schritt.',
-          'Erfinde nichts, was nicht in der Übergabe steht. Fehlendes fragst du nach.'
+          'Die Aufgabenliste ist maßgeblich. Wenn etwas in deinem gespeicherten Gedächtnis dazu im Widerspruch steht, gilt die Aufgabenliste.',
+          'Wiederhole, fasse oder bestätige die Aufgabenliste nicht noch einmal.',
+          'Fehlt für den ersten Punkt eine wesentliche Angabe oder ist sie widersprüchlich oder unklar, stelle genau eine kurze Rückfrage. Sonst beginne sofort mit dem ersten Punkt.',
+          'Erfinde nichts, was nicht in der Aufgabenliste steht. Fehlendes fragst du nach.'
         ],
-        handoverHead: 'ÜBERGABE',
+        handoverHead: 'AUFGABENLISTE',
         nextHead: 'NÄCHSTER SCHRITT',
-        nextDefault: 'Steht in der Übergabe unter „Nächster Schritt“.'
+        nextDefault: 'Beginne mit dem ersten Punkt der Aufgabenliste.'
       },
       en: {
-        head: 'This continues work from another chat. The handover is below.',
+        head: 'This continues work from another chat. The task list is below.',
         rulesHead: 'How to use it:',
         rules: [
-          'The handover is authoritative. Where anything in your saved memory contradicts it, the handover wins.',
-          'Do not repeat, summarise, or reconfirm the handover.',
-          'If an essential detail for the next step is missing, contradictory, or unclear, ask one short question. Otherwise begin the next step immediately.',
-          'Invent nothing that is not in the handover. Ask me for what is missing.'
+          'The task list is authoritative. Where anything in your saved memory contradicts it, the task list wins.',
+          'Do not repeat, summarise, or reconfirm the task list.',
+          'If an essential detail for the first item is missing, contradictory, or unclear, ask one short question. Otherwise begin with the first item.',
+          'Invent nothing that is not in the task list. Ask me for what is missing.'
         ],
-        handoverHead: 'HANDOVER',
+        handoverHead: 'TASK LIST',
         nextHead: 'NEXT STEP',
-        nextDefault: 'See "Next step" in the handover.'
+        nextDefault: 'Begin with the first item in the task list.'
       }
     }
   },

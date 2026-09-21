@@ -36,6 +36,30 @@ test('German install materials explicitly explain extracting the ZIP file', () =
   assert.match(installGuide, /nicht in der \.zip-Datei/);
 });
 
+test('voice typing guidance uses operating-system dictation without microphone code', () => {
+  const content = fs.readFileSync(path.join(extensionRoot, 'src', 'content.js'), 'utf8');
+  const strings = fs.readFileSync(path.join(extensionRoot, 'src', 'i18n.js'), 'utf8');
+  const manifest = JSON.parse(fs.readFileSync(path.join(extensionRoot, 'manifest.json'), 'utf8'));
+  const shippedJs = ['src', 'popup'].flatMap(directory => fs.readdirSync(path.join(extensionRoot, directory))
+    .filter(file => file.endsWith('.js'))
+    .map(file => fs.readFileSync(path.join(extensionRoot, directory, file), 'utf8')))
+    .join('\n');
+
+  assert.match(content, /data-t="voiceDictationTitle"/);
+  assert.match(strings, /Win\+H/);
+  assert.match(strings, /Mikrofon/);
+  assert.doesNotMatch(shippedJs, /getUserMedia|SpeechRecognition|webkitSpeechRecognition|mediaDevices|audioCapture/);
+  assert.equal((manifest.permissions || []).some(permission => /audio|capture|microphone/i.test(permission)), false);
+});
+
+test('version changes file starts with stable 1.0 and current 1.1', () => {
+  const changes = read('AENDERUNGEN.txt');
+
+  assert.match(changes, /1\.0\.0[\s\S]*Erste echte Veroeffentlichung/);
+  assert.match(changes, /1\.1\.0[\s\S]*(?:Sprach|Diktat)/);
+  assert.ok(build.GUIDE.includes('AENDERUNGEN.txt'));
+});
+
 test('the Windows updater fast-forwards only the official repository', () => {
   const installer = read('INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd');
   const updater = read('AKTUALISIEREN.cmd');

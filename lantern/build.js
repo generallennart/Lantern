@@ -9,6 +9,7 @@ const release = path.join(dist, 'release');
 
 const GUIDE = [
   'ANLEITUNG.html',
+  'AENDERUNGEN.txt',
   'OFFENE-FRAGEN.txt',
   'ZUERST-LESEN.txt',
   'INSTALLIEREN-MIT-AKTUALISIERUNGEN.cmd',

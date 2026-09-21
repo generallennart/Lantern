@@ -1,17 +1,18 @@
-# Lantern 1.0
+# Lantern
 
 Lantern ist eine Erweiterung für Chrome und Edge auf ChatGPT, Claude und
 Gemini. Sie hilft dabei, aus normalen Worten einen klaren Prompt zu machen.
 Lantern drückt nie selbst auf Senden.
 
-`1.0.0` ist die erste echte Veröffentlichung. Alle früheren `1.x.x`-Fassungen
-waren Testfassungen und gehören nicht zum öffentlichen Updateweg.
+`1.0.0` war die erste echte Veröffentlichung. Alle Versionen vor `1.0.0`
+waren Testfassungen und gehören nicht zum öffentlichen Updateweg. Die aktuelle
+stabile Fassung steht unter **Releases**.
 
 ## Einfach installieren
 
 1. Unter **Releases** die ZIP-Datei der aktuellen Version herunterladen.
 2. Die ZIP-Datei entpacken.
-3. `ANLEITUNG.html` doppelklicken und nur den sieben Schritten dort folgen.
+3. `ANLEITUNG.html` doppelklicken und nur den acht Schritten dort folgen.
 
 Die Anleitung erklärt auch genau, wie der Ordner `lantern` in Chrome als
 Erweiterung geladen wird.
@@ -50,7 +51,18 @@ Veröffentlichung im Chrome Web Store möglich.
 - Die Erweiterung darf nur auf den unterstützten Chat-Seiten und bei GitHubs
   öffentlicher Release-API arbeiten. Sie liest keine Zugangsdaten.
 
+## Mit Stimme schreiben
+
+Lantern verwendet absichtlich keine Browser-Spracherkennung und fordert keine
+Mikrofonberechtigung an: Die normale Web-Spracherkennung kann serverbasiert
+arbeiten, während lokal verarbeitete Sprachpakete nicht auf jedem Gerät
+verlässlich verfügbar sind. Stattdessen funktioniert die eingebaute
+Windows-Diktierung in jedem fokussierten Texteingabefeld: Feld anklicken,
+`Win+H` drücken und sprechen. Damit bleibt die Entscheidung über Mikrofon und
+Sprachverarbeitung bei Windows und der Person vor dem Gerät.
+
 Mehr Details: [Anleitung](ANLEITUNG.html),
+[Änderungen](AENDERUNGEN.txt),
 [Update-Anleitung](lantern/GIT-UPDATE-ANLEITUNG.html),
 [Erweiterungsdokumentation](lantern/README.md).
 

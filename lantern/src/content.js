@@ -144,8 +144,7 @@
     carry: '',           // a prompt this tab was opened with, if it was
     carryAutoInsert: false,
     mvWaiting: 0,        // timestamp of a handover request awaiting its answer
-    mvBefore: '',        // last answer when the handover request was inserted
-    mvParts: ['decisions']
+    mvBefore: ''         // last answer when the handover request was inserted
   };
 
   let root, panel, fab, els = {}, toastTimer, inputTimer, answerTimer;
@@ -902,6 +901,14 @@
         <label class="ln-l" for="ln-text" data-t="inputLabel"></label>
         <textarea id="ln-text" class="ln-main-input"></textarea>
 
+        <details class="ln-det ln-voice-dictation">
+          <summary data-t="voiceDictationTitle"></summary>
+          <div class="ln-det-inner">
+            <p class="ln-hint" data-t="voiceDictationBody"></p>
+            <p class="ln-voice-safety" data-t="voiceDictationSafety"></p>
+          </div>
+        </details>
+
         <!-- What this assistant can do besides write a reply.
              Sits directly under the box because it changes what you are asking
              for, not how it is phrased — everything else Lantern offers is a
@@ -1063,11 +1070,6 @@
         <div class="ln-mv-size"></div>
         <div class="ln-drift" hidden></div>
 
-        <div class="ln-row">
-          <div class="ln-l" data-t="mvCarry"></div>
-          <div class="ln-toggles ln-mv-parts"></div>
-        </div>
-
         <div class="ln-step">
           <button class="ln-btn ln-btn-primary" type="button" data-act="mv-request" data-t="mvStep1"></button>
           <div class="ln-hint" data-t="mvStep1Hint"></div>
@@ -1174,7 +1176,7 @@
       drift: $('.ln-drift'), driftNudge: $('.ln-drift-nudge'),
       toast: $('.ln-toast'),
       btnLocal: $('button[data-path="local"]'), btnModel: $('button[data-path="model"]'),
-      mvSize: $('.ln-mv-size'), mvWait: $('.ln-mv-wait'), mvParts: $('.ln-mv-parts'), mvResult: $('.ln-mv-result'),
+      mvSize: $('.ln-mv-size'), mvWait: $('.ln-mv-wait'), mvResult: $('.ln-mv-result'),
       mvOut: $('#ln-mv-out'), mvNext: $('#ln-mv-next'), pageLayer: $('#ln-page-layer'),
       panes: {
         prompt: $('[data-pane="prompt"]'),
@@ -3226,7 +3228,7 @@
   }
 
   function doHandoverRequest() {
-    const req = E.buildHandoverRequest({ lang: state.lang, parts: state.mvParts });
+    const req = E.buildHandoverRequest({ lang: state.lang });
     const before = lastAnswerText();
     if (insertIntoComposer(req)) {
       // The sharpen flow collects its own result; making the user come back and
@@ -3443,25 +3445,6 @@
     });
     paintGoals();
     renderCaps();
-
-    els.mvParts.innerHTML = '';
-    ((R().handover && R().handover.parts) || []).filter(p => !p.always).forEach(p => {
-      const lab = document.createElement('label');
-      lab.className = 'ln-chk';
-      const box = document.createElement('input');
-      box.type = 'checkbox';
-      box.dataset.part = p.id;
-      box.checked = state.mvParts.indexOf(p.id) !== -1;
-      box.addEventListener('change', () => {
-        state.mvParts = state.mvParts.filter(x => x !== p.id);
-        if (box.checked) state.mvParts.push(p.id);
-      });
-      const span = document.createElement('span');
-      span.textContent = (p.label && p.label[state.lang]) || p.id;
-      lab.appendChild(box);
-      lab.appendChild(span);
-      els.mvParts.appendChild(lab);
-    });
 
     /* The manual override has to offer *this* provider's models. It was built
      * from rules.js, so a Claude user opening Details was offered ChatGPT's
@@ -4590,7 +4573,6 @@
     state.carryAutoInsert = false;
     state.mvWaiting = 0;
     state.mvBefore = '';
-    state.mvParts = ['decisions'];
     state.tennis = false;
     state.caps = [];
     state.capNote = '';

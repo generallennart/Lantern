@@ -65,18 +65,18 @@ test('update metadata keeps only its checked time and numeric release version', 
 
   store.set({
     lnSettings: { updateCheck: false },
-    lnUpdate: { checkedAt: 1234, version: '1.0.1', title: 'Untrusted release text', url: 'https://elsewhere.example/' }
+    lnUpdate: { checkedAt: 1234, verified: true, version: '1.0.1', title: 'Untrusted release text', url: 'https://elsewhere.example/' }
   });
 
   assert.equal(written().lnSettings.updateCheck, false);
-  assert.deepEqual(written().lnUpdate, { checkedAt: 1234, version: '1.0.1' });
+  assert.deepEqual(written().lnUpdate, { checkedAt: 1234, verified: true, version: '1.0.1' });
   assert.equal(store.KEYS.includes('lnUpdate'), true);
 });
 
 test('update metadata rejects non-release version shapes', () => {
   const { store, written } = writingStore();
 
-  store.set({ lnUpdate: { checkedAt: 1234, version: '1.0' } });
+  store.set({ lnUpdate: { checkedAt: 1234, verified: true, version: '1.0' } });
 
   assert.deepEqual(written().lnUpdate, { checkedAt: 1234 });
 });

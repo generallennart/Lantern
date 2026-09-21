@@ -144,13 +144,26 @@ Open the **Settings** tab in Lantern.
 On a longer chat, use **Move chat** to request and collect a handover, then
 start the fresh chat.
 
-- Did the handover put each fact under only one heading? **yes / no**
+- Did the handover contain only an ordered task list, with one concrete
+  verb-led action per point? **yes / no**
+- Did it avoid separate goal, facts, decisions, style, and summary sections?
+  **yes / no**
 - Did the fresh chat open with the handover already in its real input box,
   without sending it? **yes / no**
 - Did it avoid restating the handover and either begin the next step or ask one
   short question for a genuinely missing detail? **yes / no**
 - Drag the panel, resize it from a corner, and switch language once. After each
   mouse or touch release, did the panel stop moving or resizing immediately?
+  **yes / no**
+
+### 1.8 Does voice typing stay outside Lantern?
+
+Click Lantern's main request field, press **Win+H**, and dictate a short
+sentence. Repeat in one Detail field and the collected handover box.
+
+- Did Windows write into exactly the focused field? **yes / no**
+- Did Lantern avoid showing a browser microphone permission prompt? **yes / no**
+- Did no Lantern control start listening until you explicitly pressed Win+H?
   **yes / no**
 
 ---

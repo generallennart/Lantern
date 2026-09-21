@@ -55,6 +55,20 @@ function loadBackground(options) {
   return Object.assign(sandbox.__backgroundTest, { writes, badges });
 }
 
+function officialRelease(version, extra) {
+  const tag = 'v' + version;
+  const base = 'https://github.com/generallennart/Lantern/releases/download/' + tag + '/';
+  return Object.assign({
+    tag_name: tag,
+    draft: false,
+    prerelease: false,
+    assets: [
+      { name: 'Lantern-' + version + '.zip', size: 1, browser_download_url: base + 'Lantern-' + version + '.zip' },
+      { name: 'Lantern-' + version + '.zip.sha256', size: 1, browser_download_url: base + 'Lantern-' + version + '.zip.sha256' }
+    ]
+  }, extra || {});
+}
+
 test('update checks accept only a newer official GitHub release without credentials', async () => {
   let request = null;
   const background = loadBackground({
@@ -65,7 +79,7 @@ test('update checks accept only a newer official GitHub release without credenti
       return {
         ok: true,
         headers: { get() { return null; } },
-        async text() { return JSON.stringify({ tag_name: 'v1.0.1', draft: false, prerelease: false }); }
+        async text() { return JSON.stringify(officialRelease('1.0.1')); }
       };
     }
   });
@@ -81,6 +95,54 @@ test('update checks accept only a newer official GitHub release without credenti
   assert.equal(request.options.redirect, 'error');
   assert.equal(background.badges.at(-1).text, '!');
   assert.equal(background.writes.at(-1).lnUpdate.version, '1.0.1');
+  assert.equal(background.writes.at(-1).lnUpdate.verified, true);
+});
+
+test('matching, older, or assetless releases never become update notices', async () => {
+  const cases = [
+    officialRelease('1.1.0'),
+    officialRelease('1.0.9'),
+    officialRelease('1.1.1', { assets: [] }),
+    officialRelease('1.1.2', {
+      assets: [
+        { name: 'Lantern-1.1.2.zip', size: 1, browser_download_url: 'https://example.invalid/Lantern-1.1.2.zip' },
+        { name: 'Lantern-1.1.2.zip.sha256', size: 1, browser_download_url: 'https://example.invalid/Lantern-1.1.2.zip.sha256' }
+      ]
+    })
+  ];
+
+  for (const release of cases) {
+    const background = loadBackground({
+      version: '1.1.0',
+      storage: { lnSettings: { updateCheck: true } },
+      fetch: async () => ({
+        ok: true,
+        headers: { get() { return null; } },
+        async text() { return JSON.stringify(release); }
+      })
+    });
+
+    const result = await background.checkForUpdate(true);
+    assert.equal(result.available, false, release.tag_name);
+    assert.equal(background.badges.at(-1).text, '', release.tag_name);
+  }
+});
+
+test('a failed recheck clears a stale cached update notice', async () => {
+  const background = loadBackground({
+    version: '1.1.0',
+    storage: {
+      lnSettings: { updateCheck: true },
+      lnUpdate: { checkedAt: 1, verified: true, version: '9.9.9' }
+    },
+    fetch: async () => { throw new Error('offline'); }
+  });
+
+  const result = await background.checkForUpdate(true);
+
+  assert.equal(result.available, false);
+  assert.equal(background.badges.at(-1).text, '');
+  assert.equal(background.writes.at(-1).lnUpdate.verified, false);
 });
 
 test('a disabled update check does not contact GitHub or show a badge', async () => {
@@ -100,8 +162,8 @@ test('a disabled update check does not contact GitHub or show a badge', async ()
 
 test('prereleases and malformed tags never become advertised updates', async () => {
   const releases = [
-    { tag_name: 'v9.9.9', draft: false, prerelease: true },
-    { tag_name: 'latest', draft: false, prerelease: false }
+    officialRelease('9.9.9', { prerelease: true }),
+    officialRelease('9.9.9', { tag_name: 'latest' })
   ];
 
   for (const release of releases) {

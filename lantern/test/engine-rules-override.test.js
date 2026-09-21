@@ -127,26 +127,25 @@ test('a new-chat handover cannot close its protected content container', () => {
   assert.equal((launch.match(/<\/handover>/g) || []).length, 1);
 });
 
-test('handover asks for each piece of context once without overlapping open and next-step sections', () => {
+test('handover asks only for a concrete next-steps list', () => {
   const engine = loadEngine().LN_ENGINE;
-  const request = engine.buildHandoverRequest({ lang: 'de', parts: ['decisions', 'style'] });
+  const request = engine.buildHandoverRequest({ lang: 'de' });
 
-  assert.match(request, /Ziel:/);
-  assert.match(request, /Fakten:/);
-  assert.match(request, /Entscheidungen & verworfene Wege:/);
-  assert.match(request, /Stil & Format:/);
-  assert.match(request, /Nächster Schritt & offen:/);
-  assert.match(request, /Jede Information nur einmal/i);
-  assert.equal(request.includes('\n- Offen:'), false);
-  assert.equal(request.includes('\n- Verworfen:'), false);
+  assert.match(request, /Aufgabenliste:/);
+  assert.match(request, /Jeder Punkt beginnt mit einem Verb/i);
+  assert.match(request, /Keine getrennten Abschnitte für Ziel, Fakten, Entscheidungen, Stil oder Zusammenfassung/i);
+  assert.equal(request.includes('\n- Ziel:'), false);
+  assert.equal(request.includes('\n- Fakten:'), false);
+  assert.equal(request.includes('Entscheidungen & verworfene Wege:'), false);
+  assert.equal(request.includes('Stil & Format:'), false);
 });
 
-test('handover launch continues without restating the handover', () => {
+test('task-list launch continues without restating the list', () => {
   const engine = loadEngine().LN_ENGINE;
   const launch = engine.buildHandoverLaunch('The delivery is due Friday.', { lang: 'en' });
 
-  assert.match(launch, /Do not repeat, summarise, or reconfirm the handover\./);
-  assert.match(launch, /Otherwise begin the next step immediately\./);
+  assert.match(launch, /Do not repeat, summarise, or reconfirm the task list\./);
+  assert.match(launch, /Otherwise begin with the first item\./);
   assert.equal(launch.includes('First confirm'), false);
 });
 

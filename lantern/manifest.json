@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Lantern — better prompts, plainly explained",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Say what you want in plain words. Lantern turns it into a well-structured prompt and shows what is still missing.",
   "minimum_chrome_version": "105",
   "permissions": [

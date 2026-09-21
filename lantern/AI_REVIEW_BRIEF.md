@@ -1,4 +1,4 @@
-# Lantern 1.1.0 Independent Review Brief
+# Lantern 1.1.1 Independent Review Brief
 
 ## Scope
 

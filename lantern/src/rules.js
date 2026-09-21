@@ -8,7 +8,7 @@
  */
 
 window.LN_RULES = {
-  version: '1.1.0',
+  version: '1.1.1',
   updated: '2026-09-20',
 
   /* Section headings used when assembling the prompt. */

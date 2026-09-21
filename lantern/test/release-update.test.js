@@ -52,11 +52,12 @@ test('voice typing guidance uses operating-system dictation without microphone c
   assert.equal((manifest.permissions || []).some(permission => /audio|capture|microphone/i.test(permission)), false);
 });
 
-test('version changes file starts with stable 1.0 and current 1.1', () => {
+test('version changes file starts with stable 1.0 and documents the current patch', () => {
   const changes = read('AENDERUNGEN.txt');
 
   assert.match(changes, /1\.0\.0[\s\S]*Erste echte Veroeffentlichung/);
   assert.match(changes, /1\.1\.0[\s\S]*(?:Sprach|Diktat)/);
+  assert.match(changes, /1\.1\.1[\s\S]*Aufgabenliste/);
   assert.ok(build.GUIDE.includes('AENDERUNGEN.txt'));
 });
 

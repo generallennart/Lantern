@@ -7,12 +7,24 @@ Aeltere X.X.X-Fassungen vor 1.0 waren Testfassungen.
 
 
 -------------------------------------------------------------------------------
+  1.1.1 - Aufgabenliste klarer beschrieben
+-------------------------------------------------------------------------------
+
+- Die Anleitung nennt beim Umziehen durchgehend die Aufgabenliste statt einer
+  allgemeinen Uebergabe. Der neue Chat wiederholt sie nicht, sondern beginnt
+  mit dem ersten Punkt oder stellt bei einer wesentlichen Luecke eine kurze
+  Rueckfrage.
+- Bei der Windows-Diktierung ist klarer benannt, dass sie auch in der
+  Aufgabenliste funktioniert.
+
+
+-------------------------------------------------------------------------------
   1.1.0 - Stimme, sichere Updates und klare Uebergaben
 -------------------------------------------------------------------------------
 
 - Spracheingabe: In jedem normalen Texteingabefeld kannst du die Windows-
   Diktierung verwenden. Erst das Feld anklicken, dann Win+H druecken und
-  sprechen. Das funktioniert im grossen Feld, in Details und in der Uebergabe.
+  sprechen. Das funktioniert im grossen Feld, in Details und in der Aufgabenliste.
 
 - Sicherheit der Spracheingabe: Lantern fordert kein Mikrofon an, nimmt keinen
   Ton auf und nutzt keine Browser-Spracherkennung. Ob Diktierung oder Mikrofon

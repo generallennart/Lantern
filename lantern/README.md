@@ -4,7 +4,7 @@ A Chrome extension that sits on chatgpt.com, claude.ai and gemini.google.com. Th
 plain words; Lantern reads what they wrote, turns it into a structured prompt,
 shows what is still missing, and helps them push back on the answer.
 
-**v1.1.0.** For installation see `INSTALL.txt` — written for someone who has
+**v1.1.1.** For installation see `INSTALL.txt` — written for someone who has
 never installed an unpacked extension. This file is the developer's view.
 
 **Licence: MIT** (`LICENSE`). Anyone may use it — at work, commercially,
